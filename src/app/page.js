@@ -5,6 +5,8 @@ import { analyzeAuraFromText } from '@/data';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Spinner } from '@/components/Spinner';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -14,6 +16,8 @@ export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [detectedKeywords, setDetectedKeywords] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -29,6 +33,8 @@ export default function Home() {
     setAuraResult(null);
     setDetectedKeywords([]);
     setShowDetails(false);
+    setSaveError(null);
+    setIsSaving(false);
     
     // Simulate processing time for better UX
     setTimeout(async () => {
@@ -48,27 +54,80 @@ export default function Home() {
 
           // Sonucu veritabanına kaydet
           try {
+            setIsSaving(true);
+            
+            // Veri yapısını güvenli hale getir
+            const keywords = Array.isArray(result.analyticData?.detectedKeywords) 
+              ? result.analyticData.detectedKeywords 
+              : [];
+            
+            // Veri yapısını doğrulayın ve temizleyin
+            const payload = {
+              text: text.substring(0, 2000),  // Çok uzun metinleri kırp
+              message: result.output.message || "Belirlenemeyen Aura",
+              color: result.output.color || "from-purple-500 to-blue-500",
+              description: result.output.description || "Aura analizi tamamlandı.",
+              detectedKeywords: keywords.slice(0, 20), // En fazla 20 anahtar kelime
+              sentimentRatio: parseFloat(result.analyticData?.sentimentRatio || 0)
+            };
+            
+            // Varsa image ekle, yoksa ekleme
+            if (result.output.image) {
+              payload.image = result.output.image;
+            }
+            
             const response = await fetch('/api/aura-results', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({
-                text,
-                message: result.output.message,
-                color: result.output.color,
-                description: result.output.description,
-                image: result.output.image,
-                detectedKeywords: result.analyticData?.detectedKeywords || [],
-                sentimentRatio: result.analyticData?.sentimentRatio,
-              }),
+              body: JSON.stringify(payload),
             });
             
-            if (!response.ok) {
-              throw new Error('Sonuç kaydedilemedi');
+            let responseData;
+            try {
+              responseData = await response.json();
+            } catch (jsonError) {
+              setSaveError('API yanıtı işlenirken beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+              setIsSaving(false);
+              return;
             }
+            
+            if (!response.ok) {
+              const errorCode = response.status;
+              let errorMessage;
+              
+              switch (errorCode) {
+                case 400:
+                  errorMessage = `Veri formatı hatası: ${responseData.error || 'Eksik veya hatalı bilgi'}`;
+                  break;
+                case 401:
+                  errorMessage = 'Oturum süresi dolmuş olabilir. Lütfen tekrar giriş yapın.';
+                  break;
+                case 429:
+                  errorMessage = 'Çok fazla istek gönderildi. Lütfen bir süre bekleyip tekrar deneyin.';
+                  break;
+                case 500:
+                case 502:
+                case 503:
+                  errorMessage = 'Sunucu hatası. Lütfen daha sonra tekrar deneyin.';
+                  break;
+                default:
+                  errorMessage = responseData.error || 'Sonuç kaydedilemedi';
+              }
+              
+              throw new Error(errorMessage);
+            }
+            
+            // Başarılı yanıt kontrolü
+            if (!responseData.success) {
+              throw new Error('Sonuç kaydedildi ama yanıt beklenen formatta değil');
+            }
+            
+            setIsSaving(false);
           } catch (error) {
-            console.error('Sonuç kaydedilirken hata:', error);
+            setSaveError(error.message || 'Sonuç analiz edildi ancak kaydedilemedi.');
+            setIsSaving(false);
           }
         } else {
           // Eski API uyumluluğu veya output yoksa tüm sonucu kullan
@@ -84,13 +143,15 @@ export default function Home() {
         
         setIsAnalyzing(false);
       } catch (error) {
-        console.error("Analiz hatası:", error);
+        const errorMessage = error.message || "Bilinmeyen bir hata oluştu";
+        
         setAuraResult({
-          message: "Analiz sırasında bir hata oluştu",
+          message: "Analiz Hatası",
           color: "from-red-500 to-red-600",
-          description: "Lütfen tekrar deneyin veya farklı bir metin girin."
+          description: `Analiz sırasında bir sorun oluştu: ${errorMessage}. Lütfen tekrar deneyin veya farklı bir metin girin.`
         });
         setIsAnalyzing(false);
+        setIsSaving(false);
       }
     }, 1500);
   };
@@ -111,6 +172,12 @@ export default function Home() {
             Aura<span className="text-purple-400">Scend</span>
           </h1>
           <div className="flex items-center gap-4">
+            <Link 
+              href="/dashboard"
+              className="text-white hover:text-purple-400 transition-colors"
+            >
+              Dashboard
+            </Link>
             <span className="text-white/70">{session?.user?.name || session?.user?.email}</span>
             <button
               onClick={() => signOut({ callbackUrl: '/auth/login' })}
@@ -148,10 +215,7 @@ export default function Home() {
           >
             {isAnalyzing ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+                <Spinner size="small" className="mr-3" />
                 Auran Analiz Ediliyor...
               </span>
             ) : (
@@ -188,6 +252,21 @@ export default function Home() {
                 Enerjin, düşüncelerin ve duyguların bu aurayı oluşturuyor. Bu analiz, içsel dünyanın bir yansıması ve potansiyelinin bir göstergesi.
               </p>
               
+              {isSaving ? (
+                <div className="flex flex-col items-center justify-center">
+                  <Spinner size="large" className="mb-2" />
+                  <p className="text-gray-500 animate-pulse">
+                    Sonuç kaydediliyor...
+                  </p>
+                </div>
+              ) : saveError && (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded">
+                  <p className="font-bold">Uyarı</p>
+                  <p>Analiz başarılı fakat kayıt sırasında hata oluştu: {saveError}</p>
+                  <p className="text-sm mt-2">Lütfen daha sonra tekrar deneyin veya yöneticiyle iletişime geçin.</p>
+                </div>
+              )}
+              
               {detectedKeywords.length > 0 && (
                 <div className="mt-4">
                   <button 
@@ -218,6 +297,15 @@ export default function Home() {
                   )}
                 </div>
               )}
+              
+              <div className="mt-6 text-center">
+                <Link 
+                  href="/dashboard"
+                  className="text-purple-400 hover:text-purple-300 transition-colors font-semibold"
+                >
+                  Tüm Aura Sonuçlarımı Gör →
+                </Link>
+              </div>
             </div>
           </div>
         )}
