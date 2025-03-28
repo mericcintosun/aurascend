@@ -324,3 +324,89 @@ export const proximityPatterns = [
   ["baba", "kaybettim", 3],
   ["hayat", "yolunda gitmiyor", 4]
 ]; 
+
+// Olumsuz ekler ve bağlamları için yeni kalıplar
+export const negativeSuffixPatterns = [
+  // Olumsuz ekler ve bağlamları
+  { 
+    suffix: "suz", 
+    contexts: {
+      positive: ["huzursuz", "dengesiz", "sabırsız", "sıkıntısız", "endişesiz"],
+      negative: ["huzurlu", "dengeli", "sabırlı", "sıkıntılı", "endişeli"]
+    }
+  },
+  { 
+    suffix: "sız", 
+    contexts: {
+      positive: ["huzursuz", "dengesiz", "sabırsız", "sıkıntısız", "endişesiz"],
+      negative: ["huzurlu", "dengeli", "sabırlı", "sıkıntılı", "endişeli"]
+    }
+  },
+  { 
+    suffix: "siz", 
+    contexts: {
+      positive: ["huzursuz", "dengesiz", "sabırsız", "sıkıntısız", "endişesiz"],
+      negative: ["huzurlu", "dengeli", "sabırlı", "sıkıntılı", "endişeli"]
+    }
+  },
+  { 
+    suffix: "süz", 
+    contexts: {
+      positive: ["huzursuz", "dengesiz", "sabırsız", "sıkıntısız", "endişesiz"],
+      negative: ["huzurlu", "dengeli", "sabırlı", "sıkıntılı", "endişeli"]
+    }
+  }
+];
+
+// Olumsuz eklerle oluşan kelimeler için özel gruplar
+export const negativeSuffixKeywords = [
+  // Huzur ile ilgili
+  { "keyword": "huzursuz", "group": "zor_1" },
+  { "keyword": "huzursuzluk", "group": "zor_1" },
+  { "keyword": "huzursuzca", "group": "zor_1" },
+  
+  // Denge ile ilgili
+  { "keyword": "dengesiz", "group": "zor_1" },
+  { "keyword": "dengesizlik", "group": "zor_1" },
+  { "keyword": "dengesizce", "group": "zor_1" },
+  
+  // Sabır ile ilgili
+  { "keyword": "sabırsız", "group": "negatif_2" },
+  { "keyword": "sabırsızlık", "group": "negatif_2" },
+  { "keyword": "sabırsızca", "group": "negatif_2" },
+  
+  // Sıkıntı ile ilgili
+  { "keyword": "sıkıntısız", "group": "pozitif_2" },
+  { "keyword": "sıkıntısızlık", "group": "pozitif_2" },
+  { "keyword": "sıkıntısızca", "group": "pozitif_2" },
+  
+  // Endişe ile ilgili
+  { "keyword": "endişesiz", "group": "pozitif_2" },
+  { "keyword": "endişesizlik", "group": "pozitif_2" },
+  { "keyword": "endişesizce", "group": "pozitif_2" },
+  
+  // Öfke ile ilgili
+  { "keyword": "öfkesiz", "group": "pozitif_2" },
+  { "keyword": "öfkesizlik", "group": "pozitif_2" },
+  { "keyword": "öfkesizce", "group": "pozitif_2" },
+  
+  // Korku ile ilgili
+  { "keyword": "korkusuz", "group": "guclu_2" },
+  { "keyword": "korkusuzluk", "group": "guclu_2" },
+  { "keyword": "korkusuzca", "group": "guclu_2" },
+  
+  // Kaygı ile ilgili
+  { "keyword": "kaygısız", "group": "pozitif_2" },
+  { "keyword": "kaygısızlık", "group": "pozitif_2" },
+  { "keyword": "kaygısızca", "group": "pozitif_2" },
+  
+  // Üzüntü ile ilgili
+  { "keyword": "üzüntüsüz", "group": "pozitif_1" },
+  { "keyword": "üzüntüsüzlük", "group": "pozitif_1" },
+  { "keyword": "üzüntüsüzce", "group": "pozitif_1" },
+  
+  // Yorgunluk ile ilgili
+  { "keyword": "yorgunsuz", "group": "enerji_1" },
+  { "keyword": "yorgunsuzluk", "group": "enerji_1" },
+  { "keyword": "yorgunsuzca", "group": "enerji_1" }
+]; 

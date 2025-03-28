@@ -11,6 +11,8 @@ import {
   negativeContextKeywords,
   negativePatterns,
   proximityPatterns,
+  negativeSuffixPatterns,
+  negativeSuffixKeywords,
 } from "./negativeContext";
 
 // Combine all keywords and outputs into a single dataset
@@ -1086,7 +1088,45 @@ export const getAllOutputs = () => {
   return addImagePathsToOutputs(outputs);
 };
 
-// Analiz fonksiyonu - aura belirleyici
+// Olumsuz ek analizi için yardımcı fonksiyon
+const analyzeNegativeSuffix = (word) => {
+  for (const pattern of negativeSuffixPatterns) {
+    if (word.endsWith(pattern.suffix)) {
+      // Olumsuz ekli kelimeyi kontrol et
+      const baseWord = word.slice(0, -pattern.suffix.length);
+      
+      // Pozitif bağlamda kullanılan kelimeleri kontrol et
+      if (pattern.contexts.positive.includes(word)) {
+        return {
+          isNegative: true,
+          group: "zor_1" // veya ilgili negatif grup
+        };
+      }
+      
+      // Negatif bağlamda kullanılan kelimeleri kontrol et
+      if (pattern.contexts.negative.includes(word)) {
+        return {
+          isNegative: true,
+          group: "negatif_1" // veya ilgili negatif grup
+        };
+      }
+    }
+  }
+  
+  // Özel kelime gruplarını kontrol et
+  for (const keyword of negativeSuffixKeywords) {
+    if (word === keyword.keyword) {
+      return {
+        isNegative: true,
+        group: keyword.group
+      };
+    }
+  }
+  
+  return null;
+};
+
+// Metin analizi fonksiyonunu güncelle
 export const analyzeAuraFromText = (text) => {
   // İlk olarak doğrudan kalıpları kontrol et
   const directPatternResult = checkDirectNegationPatterns(text);
@@ -1311,6 +1351,21 @@ export const analyzeAuraFromText = (text) => {
       keyword: "meraklı",
       group: "zihinsel_1"
     }];
+  }
+
+  // Kelime analizi sırasında olumsuz ek kontrolü ekle
+  const words = text.toLowerCase().split(/\s+/);
+  const detectedKeywords = [];
+  const groupWeights = {};
+
+  for (const word of words) {
+    const suffixAnalysis = analyzeNegativeSuffix(word);
+    if (suffixAnalysis) {
+      // Olumsuz ek analizi sonucunu kullan
+      detectedKeywords.push(word);
+      // Grup ağırlığını güncelle
+      groupWeights[suffixAnalysis.group] = (groupWeights[suffixAnalysis.group] || 0) + 1;
+    }
   }
 
   // Eşleşen kelimeleri bul

@@ -1,65 +1,143 @@
 // AuraScend Mock Data - Keywords and Output Groups
 export const auraData = {
   keywords: [
-    // Pozitif Duygular - Grup: pozitif_1
-    { keyword: "mutlu", group: "pozitif_1" },
-    { keyword: "sevinçli", group: "pozitif_1" },
-    { keyword: "neşeli", group: "pozitif_1" },
-    { keyword: "keyifli", group: "pozitif_1" },
-
-    // Pozitif Duygular - Grup: pozitif_2
-    { keyword: "heyecanlı", group: "pozitif_2" },
-    { keyword: "coşkulu", group: "pozitif_2" },
-    { keyword: "enerjik", group: "pozitif_2" },
-
-    // Pozitif Duygular - Grup: pozitif_3
-    { keyword: "umutlu", group: "pozitif_3" },
-    { keyword: "iyimser", group: "pozitif_3" },
-    { keyword: "olumlu", group: "pozitif_3" },
-
-    // Negatif Duygular - Grup: negatif_1
-    { keyword: "üzgün", group: "negatif_1" },
-    { keyword: "kederli", group: "negatif_1" },
-    { keyword: "melankolik", group: "negatif_1" },
-    { keyword: "hasret", group: "negatif_1" },
-
-    // Negatif Duygular - Grup: negatif_2
-    { keyword: "kızgın", group: "negatif_2" },
-    { keyword: "öfkeli", group: "negatif_2" },
-    { keyword: "sinirli", group: "negatif_2" },
-
-    // Negatif Duygular - Grup: negatif_3
-    { keyword: "korkmuş", group: "negatif_3" },
-    { keyword: "endişeli", group: "negatif_3" },
-    { keyword: "tedirgin", group: "negatif_3" },
-
-    // Durağan Duygular - Grup: duragan_1
-    { keyword: "sakin", group: "duragan_1" },
-    { keyword: "huzurlu", group: "duragan_1" },
-    { keyword: "dingin", group: "duragan_1" },
-
-    // Durağan Duygular - Grup: duragan_2
-    { keyword: "düşünceli", group: "duragan_2" },
-    { keyword: "dalgın", group: "duragan_2" },
-    { keyword: "meditatif", group: "duragan_2" },
-
-    // Karmaşık Duygular - Grup: karmasik_1
-    { keyword: "nostaljik", group: "karmasik_1" },
-    { keyword: "özlem", group: "karmasik_1" },
-
-    // Karmaşık Duygular - Grup: karmasik_2
-    { keyword: "tutkulu", group: "karmasik_2" },
-    { keyword: "arzulu", group: "karmasik_2" },
-    { keyword: "istekli", group: "karmasik_2" },
-
-    // Karmaşık Duygular - Grup: karmasik_3
-    { keyword: "şaşkın", group: "karmasik_3" },
-    { keyword: "hayret", group: "karmasik_3" },
-    { keyword: "şok", group: "karmasik_3" },
-
-    // İlk 30 anahtar kelime - diğerleri dosyalara bölünecek
+    {
+      keyword: "mutlu",
+      group: "pozitif_1",
+    },
+    {
+      keyword: "sevinçli",
+      group: "pozitif_1",
+    },
+    {
+      keyword: "neşeli",
+      group: "pozitif_1",
+    },
+    {
+      keyword: "keyifli",
+      group: "pozitif_1",
+    },
+    {
+      keyword: "heyecanlı",
+      group: "pozitif_2",
+    },
+    {
+      keyword: "coşkulu",
+      group: "pozitif_2",
+    },
+    {
+      keyword: "enerjik",
+      group: "pozitif_2",
+    },
+    {
+      keyword: "umutlu",
+      group: "pozitif_3",
+    },
+    {
+      keyword: "iyimser",
+      group: "pozitif_3",
+    },
+    {
+      keyword: "olumlu",
+      group: "pozitif_3",
+    },
+    {
+      keyword: "üzgün",
+      group: "negatif_1",
+    },
+    {
+      keyword: "kederli",
+      group: "negatif_1",
+    },
+    {
+      keyword: "melankolik",
+      group: "negatif_1",
+    },
+    {
+      keyword: "hasret",
+      group: "negatif_1",
+    },
+    {
+      keyword: "kızgın",
+      group: "negatif_2",
+    },
+    {
+      keyword: "öfkeli",
+      group: "negatif_2",
+    },
+    {
+      keyword: "sinirli",
+      group: "negatif_2",
+    },
+    {
+      keyword: "korkmuş",
+      group: "negatif_3",
+    },
+    {
+      keyword: "endişeli",
+      group: "negatif_3",
+    },
+    {
+      keyword: "tedirgin",
+      group: "negatif_3",
+    },
+    {
+      keyword: "sakin",
+      group: "duragan_1",
+    },
+    {
+      keyword: "huzurlu",
+      group: "duragan_1",
+    },
+    {
+      keyword: "dingin",
+      group: "duragan_1",
+    },
+    {
+      keyword: "düşünceli",
+      group: "duragan_2",
+    },
+    {
+      keyword: "dalgın",
+      group: "duragan_2",
+    },
+    {
+      keyword: "meditatif",
+      group: "duragan_2",
+    },
+    {
+      keyword: "nostaljik",
+      group: "karmasik_1",
+    },
+    {
+      keyword: "özlem",
+      group: "karmasik_1",
+    },
+    {
+      keyword: "tutkulu",
+      group: "karmasik_2",
+    },
+    {
+      keyword: "arzulu",
+      group: "karmasik_2",
+    },
+    {
+      keyword: "istekli",
+      group: "karmasik_2",
+    },
+    {
+      keyword: "şaşkın",
+      group: "karmasik_3",
+    },
+    {
+      keyword: "hayret",
+      group: "karmasik_3",
+    },
+    {
+      keyword: "şok",
+      group: "karmasik_3",
+    },
   ],
-
   outputs: {
     pozitif_1: {
       message: "Senin auran mutluluk! ✨",
