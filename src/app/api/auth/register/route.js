@@ -28,7 +28,7 @@ export async function POST(request) {
     // Check if user already exists
     console.log('Checking if user exists with email:', email);
     try {
-      const existingUser = await prisma.User.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: { email }
       });
       
@@ -41,6 +41,7 @@ export async function POST(request) {
       }
     } catch (findError) {
       console.error('Error checking for existing user:', findError);
+      // Continue even if checking fails - we'll try to create the user anyway
     }
     
     // Hash password
@@ -49,7 +50,7 @@ export async function POST(request) {
     
     // Create new user
     console.log('Creating new user with email:', email);
-    const user = await prisma.User.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
@@ -76,6 +77,15 @@ export async function POST(request) {
     // Check if it's a Prisma error and provide more detailed message
     if (error.code) {
       console.error('Prisma error code:', error.code);
+    }
+    
+    // If it's a MongoDB connection error about empty database
+    if (error.message && error.message.includes('empty database name not allowed')) {
+      console.error('MongoDB connection error - empty database name');
+      return NextResponse.json(
+        { message: 'Veritabanı bağlantı hatası. Lütfen daha sonra tekrar deneyin veya yöneticiyle iletişime geçin.' },
+        { status: 500 }
+      );
     }
     
     return NextResponse.json(
