@@ -104,8 +104,17 @@ export default function Home() {
         </div>
         
         {auraResult && (
-          <div className={`mt-10 w-full max-w-2xl rounded-xl overflow-hidden shadow-2xl animate-fadeIn`}>
+          <div className="mt-10 mb-16 rounded-xl overflow-hidden shadow-xl max-w-3xl mx-auto">
             <div className={`p-8 bg-gradient-to-r ${auraResult.color}`}>
+              {auraResult.image && (
+                <div className="mb-6 flex justify-center">
+                  <img 
+                    src={auraResult.image} 
+                    alt={`${auraResult.message} Aura`} 
+                    className="rounded-lg shadow-lg max-h-[300px]" 
+                  />
+                </div>
+              )}
               <h3 className="text-3xl font-bold text-white mb-2">{auraResult.message}</h3>
               <p className="text-white/90 text-lg">{auraResult.description}</p>
             </div>

@@ -998,9 +998,38 @@ export const getAllKeywords = () => {
   ];
 };
 
+// Aura çıktı gruplarına image parametresi ekleniyor
+const addImagePathsToOutputs = (outputs) => {
+  const updatedOutputs = { ...outputs };
+  
+  // İlk 20 resim için yolları ekleyelim
+  if (updatedOutputs.pozitif_1) updatedOutputs.pozitif_1.image = "/images/auras/aura_neseli_pozitif1.png";
+  if (updatedOutputs.pozitif_2) updatedOutputs.pozitif_2.image = "/images/auras/aura_huzurlu_pozitif2.png";
+  if (updatedOutputs.pozitif_3) updatedOutputs.pozitif_3.image = "/images/auras/aura_iyimser_pozitif3.png";
+  if (updatedOutputs.pozitif_4) updatedOutputs.pozitif_4.image = "/images/auras/aura_heyecan_dolu_pozitif4.png";
+  if (updatedOutputs.pozitif_5) updatedOutputs.pozitif_5.image = "/images/auras/aura_sefkat_dolu_pozitif5.png";
+  if (updatedOutputs.pozitif_6) updatedOutputs.pozitif_6.image = "/images/auras/aura_buyuleyici_pozitif6.png";
+  if (updatedOutputs.pozitif_7) updatedOutputs.pozitif_7.image = "/images/auras/aura_guclu_pozitif7.png";
+  if (updatedOutputs.pozitif_8) updatedOutputs.pozitif_8.image = "/images/auras/aura_canlandirici_pozitif8.png";
+  if (updatedOutputs.pozitif_9) updatedOutputs.pozitif_9.image = "/images/auras/aura_umut_dolu_pozitif9.png";
+  if (updatedOutputs.negatif_1) updatedOutputs.negatif_1.image = "/images/auras/aura_melankolik_negatif1.png";
+  if (updatedOutputs.negatif_2) updatedOutputs.negatif_2.image = "/images/auras/aura_ofkeli_negatif2.png";
+  if (updatedOutputs.negatif_3) updatedOutputs.negatif_3.image = "/images/auras/aura_tedirgin_negatif3.png";
+  if (updatedOutputs.negatif_4) updatedOutputs.negatif_4.image = "/images/auras/aura_utanc_suphe_negatif4.png";
+  if (updatedOutputs.duragan_1) updatedOutputs.duragan_1.image = "/images/auras/aura_sakin_duragan1.png";
+  if (updatedOutputs.duragan_2) updatedOutputs.duragan_2.image = "/images/auras/aura_derin_dusunen_duragan2.png";
+  if (updatedOutputs.karmasik_1) updatedOutputs.karmasik_1.image = "/images/auras/aura_merak_dolu_karmasik1.png";
+  if (updatedOutputs.karmasik_2) updatedOutputs.karmasik_2.image = "/images/auras/aura_karmasik_duygular_karmasik2.png";
+  if (updatedOutputs.karmasik_3) updatedOutputs.karmasik_3.image = "/images/auras/aura_tutkulu_karmasik3.png";
+  if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.image = "/images/auras/aura_sevgi_dolu_sosyal1.png";
+  if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.image = "/images/auras/aura_minnettar_sosyal2.png";
+  
+  return updatedOutputs;
+};
+
 // Tüm çıktıları birleştir
 export const getAllOutputs = () => {
-  return {
+  const outputs = {
     ...auraData.outputs,
     ...auraData2.outputs,
     ...auraData3.outputs,
@@ -1010,6 +1039,8 @@ export const getAllOutputs = () => {
     ...auraDataExtended3.outputs,
     ...auraDataExtended4.outputs,
   };
+  
+  return addImagePathsToOutputs(outputs);
 };
 
 // Analiz fonksiyonu - aura belirleyici
