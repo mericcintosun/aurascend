@@ -4,51 +4,82 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    console.log('Register API route called');
+    const body = await request.json();
+    const { name, email, password } = body;
     
-    // Validation
-    if (!email || !password || !name) {
+    console.log('Registration request received for email:', email);
+    
+    // Validate input
+    if (!email || !email.includes('@') || !password || password.length < 6) {
+      console.log('Validation failed:', { 
+        hasEmail: !!email, 
+        validEmail: email?.includes('@'), 
+        hasPassword: !!password, 
+        validPasswordLength: password?.length >= 6 
+      });
+      
       return NextResponse.json(
-        { error: "Name, email ve şifre gerekli" },
+        { message: 'Geçersiz e-posta veya şifre' },
         { status: 400 }
       );
     }
     
-    // Check if user exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-    
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "Bu email adresi zaten kayıtlı" },
-        { status: 400 }
-      );
+    // Check if user already exists
+    console.log('Checking if user exists with email:', email);
+    try {
+      const existingUser = await prisma.User.findUnique({
+        where: { email }
+      });
+      
+      if (existingUser) {
+        console.log('User already exists with email:', email);
+        return NextResponse.json(
+          { message: 'Bu e-posta adresi zaten kullanılıyor' },
+          { status: 400 }
+        );
+      }
+    } catch (findError) {
+      console.error('Error checking for existing user:', findError);
     }
     
     // Hash password
+    console.log('Hashing password');
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    // Create user
-    const user = await prisma.user.create({
+    // Create new user
+    console.log('Creating new user with email:', email);
+    const user = await prisma.User.create({
       data: {
         name,
         email,
-        password: hashedPassword,
-      },
+        password: hashedPassword
+      }
     });
     
-    // Return the user without password
+    console.log('User created successfully:', user.id);
+    
+    // Don't send the password in the response
     const { password: _, ...userWithoutPassword } = user;
     
     return NextResponse.json(
-      { message: "Kayıt başarılı", user: userWithoutPassword },
+      { 
+        message: 'Kullanıcı başarıyla oluşturuldu',
+        user: userWithoutPassword
+      },
       { status: 201 }
     );
+    
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error('Error during registration:', error);
+    
+    // Check if it's a Prisma error and provide more detailed message
+    if (error.code) {
+      console.error('Prisma error code:', error.code);
+    }
+    
     return NextResponse.json(
-      { error: "Kayıt olurken bir hata oluştu" },
+      { message: 'Kayıt sırasında bir hata oluştu: ' + (error.message || 'Bilinmeyen hata') },
       { status: 500 }
     );
   }

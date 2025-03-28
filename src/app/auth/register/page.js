@@ -9,6 +9,12 @@ export default function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -27,6 +33,79 @@ export default function Register() {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate form data
+    if (formData.password !== formData.confirmPassword) {
+      setError('Şifreler eşleşmiyor');
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      setError('Şifre en az 6 karakter olmalıdır');
+      return;
+    }
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      // Register the user
+      console.log('Sending registration request with data:', {
+        name: formData.name,
+        email: formData.email,
+        password: '******' // Don't log actual password
+      });
+      
+      const registerResponse = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      
+      const data = await registerResponse.json();
+      console.log('Registration response status:', registerResponse.status);
+      console.log('Registration response data:', data);
+      
+      if (!registerResponse.ok) {
+        throw new Error(data.message || 'Kayıt sırasında bir hata oluştu');
+      }
+      
+      // If registration successful, sign in the user
+      const signInResult = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      
+      if (signInResult?.error) {
+        setError(signInResult.error);
+      } else {
+        router.push('/');
+      }
+    } catch (error) {
+      setError(error.message || 'Kayıt sırasında bir hata oluştu');
+      console.error('Registration error details:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-900 to-black p-4">
       <div className="w-full max-w-md bg-white/5 backdrop-blur-lg rounded-xl p-8 shadow-2xl border border-white/10">
@@ -37,6 +116,89 @@ export default function Register() {
             {error}
           </div>
         )}
+        
+        <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+          <div>
+            <label htmlFor="name" className="block text-white/80 mb-1 text-sm">
+              İsim
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="İsminiz"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="email" className="block text-white/80 mb-1 text-sm">
+              E-posta
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="ornek@email.com"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="password" className="block text-white/80 mb-1 text-sm">
+              Şifre
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="confirmPassword" className="block text-white/80 mb-1 text-sm">
+              Şifre Tekrarı
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="••••••••"
+            />
+          </div>
+          
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-md"
+          >
+            {loading ? 'İşleniyor...' : 'Kayıt Ol'}
+          </button>
+        </form>
+        
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/20"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 text-white/60 bg-gradient-to-b from-blue-900 to-black">veya</span>
+          </div>
+        </div>
         
         <div className="space-y-6">
           <button
