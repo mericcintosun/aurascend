@@ -1024,6 +1024,49 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.image = "/images/auras/aura_sevgi_dolu_sosyal1.png";
   if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.image = "/images/auras/aura_minnettar_sosyal2.png";
   
+  // Kalan resimler için yolları ekleyelim
+  if (updatedOutputs.sosyal_3) updatedOutputs.sosyal_3.image = "/images/auras/aura_guven_veren_sosyal3.png";
+  if (updatedOutputs.bireysel_1) updatedOutputs.bireysel_1.image = "/images/auras/aura_gururlu_bireysel1.png";
+  if (updatedOutputs.bireysel_2) updatedOutputs.bireysel_2.image = "/images/auras/aura_ozgur_bireysel2.png";
+  if (updatedOutputs.bireysel_3) updatedOutputs.bireysel_3.image = "/images/auras/aura_yaratici_bireysel3.png";
+  if (updatedOutputs.zor_1) updatedOutputs.zor_1.image = "/images/auras/aura_huzursuz_zor1.png";
+  if (updatedOutputs.zor_2) updatedOutputs.zor_2.image = "/images/auras/aura_sikismis_hisseden_zor2.png";
+  if (updatedOutputs.zor_3) updatedOutputs.zor_3.image = "/images/auras/aura_yorgun_zor3.png";
+  if (updatedOutputs.zor_4) updatedOutputs.zor_4.image = "/images/auras/aura_varoluşsal_sorgulamada_zor4.png";
+  if (updatedOutputs.guclu_1) updatedOutputs.guclu_1.image = "/images/auras/aura_kararli_guclu1.png";
+  if (updatedOutputs.guclu_2) updatedOutputs.guclu_2.image = "/images/auras/aura_cesur_guclu2.png";
+  if (updatedOutputs.guclu_3) updatedOutputs.guclu_3.image = "/images/auras/aura_dayanikli_guclu3.png";
+  if (updatedOutputs.hassas_1) updatedOutputs.hassas_1.image = "/images/auras/aura_nazik_hassas1.png";
+  if (updatedOutputs.hassas_2) updatedOutputs.hassas_2.image = "/images/auras/aura_duygusal_hassas2.png";
+  if (updatedOutputs.degisim_1) updatedOutputs.degisim_1.image = "/images/auras/aura_donusum_degisim1.png";
+  if (updatedOutputs.degisim_2) updatedOutputs.degisim_2.image = "/images/auras/aura_yenileyici_degisim2.png";
+  if (updatedOutputs.zihinsel_1) updatedOutputs.zihinsel_1.image = "/images/auras/aura_merakli_zihinsel1.png";
+  if (updatedOutputs.zihinsel_2) updatedOutputs.zihinsel_2.image = "/images/auras/aura_analitik_zihinsel2.png";
+  if (updatedOutputs.zihinsel_3) updatedOutputs.zihinsel_3.image = "/images/auras/aura_bilge_zihinsel3.png";
+  if (updatedOutputs.zihinsel_4) updatedOutputs.zihinsel_4.image = "/images/auras/aura_odaklanmis_zihinsel4.png";
+  if (updatedOutputs.denge_1) updatedOutputs.denge_1.image = "/images/auras/aura_uyumlu_denge1.png";
+  if (updatedOutputs.denge_2) updatedOutputs.denge_2.image = "/images/auras/aura_bariscil_denge2.png";
+  if (updatedOutputs.spirituel_1) updatedOutputs.spirituel_1.image = "/images/auras/aura_aydinlanmis_spirituel1.png";
+  if (updatedOutputs.spirituel_2) updatedOutputs.spirituel_2.image = "/images/auras/aura_mistik_spirituel2.png";
+  if (updatedOutputs.enerji_1) updatedOutputs.enerji_1.image = "/images/auras/aura_dinamik_enerji1.png";
+  if (updatedOutputs.enerji_2) updatedOutputs.enerji_2.image = "/images/auras/aura_parlak_enerji2.png";
+  if (updatedOutputs.sanatsal_1) updatedOutputs.sanatsal_1.image = "/images/auras/aura_sanatsal_sanatsal1.png";
+  if (updatedOutputs.edebi_1) updatedOutputs.edebi_1.image = "/images/auras/aura_siirsel_edebi1.png";
+  if (updatedOutputs.efsanevi_1) updatedOutputs.efsanevi_1.image = "/images/auras/aura_destansi_efsanevi1.png";
+  if (updatedOutputs.gelecek_1) updatedOutputs.gelecek_1.image = "/images/auras/aura_vizyoner_gelecek1.png";
+  if (updatedOutputs.profesyonel_1) updatedOutputs.profesyonel_1.image = "/images/auras/aura_verimlilik_profesyonel1.png";
+  if (updatedOutputs.felsefi_1) updatedOutputs.felsefi_1.image = "/images/auras/aura_felsefi_felsefi1.png";
+  if (updatedOutputs.liderlik_1) updatedOutputs.liderlik_1.image = "/images/auras/aura_liderlik_liderlik1.png";
+  if (updatedOutputs.topluluk_1) updatedOutputs.topluluk_1.image = "/images/auras/aura_birlestirici_topluluk1.png";
+  if (updatedOutputs.modern_1) updatedOutputs.modern_1.image = "/images/auras/aura_cagdas_modern1.png";
+  if (updatedOutputs.notr_1) updatedOutputs.notr_1.image = "/images/auras/aura_dengeli_notr1.png";
+  if (updatedOutputs.notr_2) updatedOutputs.notr_2.image = "/images/auras/aura_kimlik_arayisinda_notr2.png";
+  if (updatedOutputs.notr_3) updatedOutputs.notr_3.image = "/images/auras/aura_netlik_arayan_notr3.png";
+  if (updatedOutputs.meta_1) updatedOutputs.meta_1.image = "/images/auras/aura_isiltili_meta1.png";
+  if (updatedOutputs.ust_4) updatedOutputs.ust_4.image = "/images/auras/aura_evrensel_ust4.png";
+  if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.image = "/images/auras/aura_belirsiz_belirsiz1.png";
+  if (updatedOutputs.default) updatedOutputs.default.image = "/images/auras/aura_cok_boyutlu_default.png";
+  
   return updatedOutputs;
 };
 
