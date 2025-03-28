@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { analyzeAuraFromText } from '@/data';
+import Image from 'next/image';
 
 export default function Home() {
   const [text, setText] = useState('');
@@ -108,10 +109,12 @@ export default function Home() {
             <div className={`p-8 bg-gradient-to-r ${auraResult.color}`}>
               {auraResult.image && (
                 <div className="mb-6 flex justify-center">
-                  <img 
+                  <Image 
                     src={auraResult.image} 
                     alt={`${auraResult.message} Aura`} 
-                    className="rounded-lg shadow-lg max-h-[300px]" 
+                    width={500}
+                    height={300}
+                    className="rounded-lg shadow-lg max-h-[300px] object-cover" 
                   />
                 </div>
               )}
