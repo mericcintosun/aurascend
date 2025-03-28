@@ -1,17 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { analyzeAuraFromText } from '@/data';
 import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [text, setText] = useState('');
   const [auraResult, setAuraResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [detectedKeywords, setDetectedKeywords] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   
-  const analyzeText = () => {
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/auth/login');
+    }
+  }, [status, router]);
+  
+  const analyzeText = async () => {
+    if (!session) return;
+    
     // Start analysis animation
     setIsAnalyzing(true);
     setAuraResult(null);
@@ -19,7 +31,7 @@ export default function Home() {
     setShowDetails(false);
     
     // Simulate processing time for better UX
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         // Use our utility function to analyze the text
         const result = analyzeAuraFromText(text);
@@ -32,6 +44,31 @@ export default function Home() {
           // İşlenen anahtar kelimeleri göster
           if (result.analyticData) {
             setDetectedKeywords(result.analyticData.detectedKeywords || []);
+          }
+
+          // Sonucu veritabanına kaydet
+          try {
+            const response = await fetch('/api/aura-results', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                text,
+                message: result.output.message,
+                color: result.output.color,
+                description: result.output.description,
+                image: result.output.image,
+                detectedKeywords: result.analyticData?.detectedKeywords || [],
+                sentimentRatio: result.analyticData?.sentimentRatio,
+              }),
+            });
+            
+            if (!response.ok) {
+              throw new Error('Sonuç kaydedilemedi');
+            }
+          } catch (error) {
+            console.error('Sonuç kaydedilirken hata:', error);
           }
         } else {
           // Eski API uyumluluğu veya output yoksa tüm sonucu kullan
@@ -58,12 +95,31 @@ export default function Home() {
     }, 1500);
   };
   
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-900 to-black">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-400"></div>
+      </div>
+    );
+  }
+  
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-4 sm:p-8 bg-gradient-to-b from-blue-900 to-black">
       <header className="w-full py-4">
-        <h1 className="text-4xl sm:text-6xl font-bold text-white text-center">
-          Aura<span className="text-purple-400">Scend</span>
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl sm:text-6xl font-bold text-white">
+            Aura<span className="text-purple-400">Scend</span>
+          </h1>
+          <div className="flex items-center gap-4">
+            <span className="text-white/70">{session?.user?.name || session?.user?.email}</span>
+            <button
+              onClick={() => signOut({ callbackUrl: '/auth/login' })}
+              className="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg transition-all"
+            >
+              Çıkış Yap
+            </button>
+          </div>
+        </div>
         <p className="text-lg sm:text-xl text-white/70 text-center mt-2">
           İçsel dünyanı keşfet, auranı yansıt
         </p>
