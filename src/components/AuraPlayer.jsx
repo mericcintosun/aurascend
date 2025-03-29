@@ -1,32 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FaPlay, FaPause, FaVolumeUp, FaVolumeDown, FaVolumeMute } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
-const AuraPlayer = ({ musicSrc }) => {
+const AuraPlayer = ({ musicFile }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume;
-    }
-  }, [volume, isMuted]);
-
-  useEffect(() => {
-    if (!musicSrc) return;
-    
-    // Müzik değiştiğinde sıfırla
+    // Reset player when music file changes
     setIsPlaying(false);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      audioRef.current.load();
     }
-  }, [musicSrc]);
+  }, [musicFile]);
 
   const togglePlay = () => {
-    if (!audioRef.current || !musicSrc) return;
-    
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -37,57 +28,64 @@ const AuraPlayer = ({ musicSrc }) => {
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
+    audioRef.current.muted = !isMuted;
   };
 
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
-    if (newVolume > 0 && isMuted) {
+    audioRef.current.volume = newVolume;
+    
+    // If volume is set to 0, mute the audio
+    if (newVolume === 0) {
+      setIsMuted(true);
+      audioRef.current.muted = true;
+    } else if (isMuted) {
+      // If volume is increased and audio was muted, unmute it
       setIsMuted(false);
+      audioRef.current.muted = false;
     }
   };
 
-  const getVolumeIcon = () => {
-    if (isMuted || volume === 0) return <FaVolumeMute />;
-    if (volume < 0.5) return <FaVolumeDown />;
-    return <FaVolumeUp />;
-  };
-
-  if (!musicSrc) return null;
-
   return (
-    <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg shadow-sm w-full max-w-md mx-auto mb-4 border border-purple-200">
-      <audio ref={audioRef} src={musicSrc} loop />
-      
-      <div className="flex items-center space-x-2">
-        <button 
-          onClick={togglePlay} 
-          className="p-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:from-purple-600 hover:to-indigo-700 transition-all"
-        >
-          {isPlaying ? <FaPause /> : <FaPlay />}
-        </button>
-        <span className="text-sm font-medium text-purple-800">
-          Aura Müziği
-        </span>
+    <div className="w-full rounded-lg bg-gradient-to-r from-purple-800 to-violet-900 p-3 text-white shadow-lg">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <button
+            onClick={togglePlay}
+            className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-900 shadow-md hover:bg-gray-100"
+          >
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
+          <div>
+            <p className="text-sm font-medium">Auranın Müziği</p>
+            <p className="text-xs opacity-70">10 saniye</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center">
+          <button
+            onClick={toggleMute}
+            className="mr-2 text-white hover:text-gray-200"
+          >
+            {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="h-2 w-20 cursor-pointer appearance-none rounded-lg bg-white bg-opacity-30"
+          />
+        </div>
       </div>
       
-      <div className="flex items-center space-x-2">
-        <button 
-          onClick={toggleMute} 
-          className="text-purple-700 hover:text-purple-900"
-        >
-          {getVolumeIcon()}
-        </button>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={handleVolumeChange}
-          className="w-20 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
+      <audio ref={audioRef} preload="metadata">
+        <source src={musicFile} type="audio/mp3" />
+        Tarayıcınız ses öğesini desteklemiyor.
+      </audio>
     </div>
   );
 };

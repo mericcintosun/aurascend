@@ -7,7 +7,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Spinner } from '@/components/Spinner';
-import AuraPlayer from "@/components/AuraPlayer";
+import AuraPlayer from '../components/AuraPlayer';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -368,7 +368,7 @@ export default function Home() {
                     
                     {auraResult.music && (
                       <div className="mb-6">
-                        <AuraPlayer musicSrc={auraResult.music} />
+                        <AuraPlayer musicFile={auraResult.music} />
                       </div>
                     )}
                     

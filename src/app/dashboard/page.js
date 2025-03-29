@@ -379,7 +379,7 @@ export default function Dashboard() {
                   {/* Aura müziği */}
                   {detailAura.music && (
                     <div className="mb-6">
-                      <AuraPlayer musicSrc={detailAura.music} />
+                      <AuraPlayer musicFile={detailAura.music} />
                     </div>
                   )}
                   

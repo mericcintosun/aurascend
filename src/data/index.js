@@ -1130,6 +1130,45 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.music = "/playlist/music60.mp3";
   if (updatedOutputs.default) updatedOutputs.default.music = "/playlist/music61.mp3";
   
+  // Ek aura tipleri için müzik atamaları
+  if (updatedOutputs.mizah_1) updatedOutputs.mizah_1.music = "/playlist/music1.mp3"; // Neşeli ile aynı müzik
+  if (updatedOutputs.mizah_2) updatedOutputs.mizah_2.music = "/playlist/music2.mp3";
+  if (updatedOutputs.bilgelik_1) updatedOutputs.bilgelik_1.music = "/playlist/music36.mp3"; // Zihinsel_1 ile aynı müzik
+  if (updatedOutputs.bilgelik_2) updatedOutputs.bilgelik_2.music = "/playlist/music37.mp3"; // Zihinsel_2 ile aynı müzik
+  if (updatedOutputs.bilgelik_3) updatedOutputs.bilgelik_3.music = "/playlist/music38.mp3"; // Zihinsel_3 ile aynı müzik
+  if (updatedOutputs.cesaret_1) updatedOutputs.cesaret_1.music = "/playlist/music30.mp3"; // Guclu_2 ile aynı müzik
+  if (updatedOutputs.cesaret_2) updatedOutputs.cesaret_2.music = "/playlist/music31.mp3"; // Guclu_3 ile aynı müzik
+  if (updatedOutputs.durus_1) updatedOutputs.durus_1.music = "/playlist/music29.mp3"; // Guclu_1 ile aynı müzik
+  if (updatedOutputs.durus_2) updatedOutputs.durus_2.music = "/playlist/music30.mp3"; // Guclu_2 ile aynı müzik
+  if (updatedOutputs.esneklik_1) updatedOutputs.esneklik_1.music = "/playlist/music35.mp3"; // Degisim_2 ile aynı müzik
+  if (updatedOutputs.esneklik_2) updatedOutputs.esneklik_2.music = "/playlist/music34.mp3"; // Degisim_1 ile aynı müzik
+  if (updatedOutputs.ichuzur_1) updatedOutputs.ichuzur_1.music = "/playlist/music15.mp3"; // Duragan_2 ile aynı müzik
+  if (updatedOutputs.ichuzur_2) updatedOutputs.ichuzur_2.music = "/playlist/music14.mp3"; // Duragan_1 ile aynı müzik
+  if (updatedOutputs.ihtisam_1) updatedOutputs.ihtisam_1.music = "/playlist/music48.mp3"; // Efsanevi_1 ile aynı müzik
+  if (updatedOutputs.ihtisam_2) updatedOutputs.ihtisam_2.music = "/playlist/music47.mp3"; // Edebi_1 ile aynı müzik
+  if (updatedOutputs.yaraticilik_1) updatedOutputs.yaraticilik_1.music = "/playlist/music24.mp3"; // Bireysel_3 ile aynı müzik
+  if (updatedOutputs.yaraticilik_2) updatedOutputs.yaraticilik_2.music = "/playlist/music46.mp3"; // Sanatsal_1 ile aynı müzik
+  
+  // Aura Data Extended 2'den gelen tiplere müzik atamaları
+  if (updatedOutputs.doga_1) updatedOutputs.doga_1.music = "/playlist/music3.mp3";
+  if (updatedOutputs.doga_2) updatedOutputs.doga_2.music = "/playlist/music4.mp3";
+  if (updatedOutputs.doga_3) updatedOutputs.doga_3.music = "/playlist/music5.mp3";
+  if (updatedOutputs.doga_4) updatedOutputs.doga_4.music = "/playlist/music6.mp3";
+  if (updatedOutputs.renk_1) updatedOutputs.renk_1.music = "/playlist/music7.mp3";
+  if (updatedOutputs.renk_2) updatedOutputs.renk_2.music = "/playlist/music8.mp3";
+  if (updatedOutputs.renk_3) updatedOutputs.renk_3.music = "/playlist/music9.mp3";
+  if (updatedOutputs.renk_4) updatedOutputs.renk_4.music = "/playlist/music10.mp3";
+  if (updatedOutputs.renk_5) updatedOutputs.renk_5.music = "/playlist/music11.mp3";
+  if (updatedOutputs.muzik_1) updatedOutputs.muzik_1.music = "/playlist/music12.mp3";
+  if (updatedOutputs.muzik_2) updatedOutputs.muzik_2.music = "/playlist/music13.mp3";
+  if (updatedOutputs.muzik_3) updatedOutputs.muzik_3.music = "/playlist/music14.mp3";
+  if (updatedOutputs.mevsim_1) updatedOutputs.mevsim_1.music = "/playlist/music15.mp3";
+  if (updatedOutputs.mevsim_2) updatedOutputs.mevsim_2.music = "/playlist/music16.mp3";
+  if (updatedOutputs.mevsim_3) updatedOutputs.mevsim_3.music = "/playlist/music17.mp3";
+  if (updatedOutputs.mevsim_4) updatedOutputs.mevsim_4.music = "/playlist/music18.mp3";
+  if (updatedOutputs.teknoloji_1) updatedOutputs.teknoloji_1.music = "/playlist/music19.mp3";
+  if (updatedOutputs.teknoloji_2) updatedOutputs.teknoloji_2.music = "/playlist/music20.mp3";
+  
   return updatedOutputs;
 };
 
