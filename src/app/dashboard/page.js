@@ -173,7 +173,7 @@ export default function Dashboard() {
       <div className="absolute top-0 left-0 w-full h-96 bg-[url('/images/stars-bg.jpg')] bg-cover opacity-20 z-0"></div>
       
       <main className="max-w-6xl mx-auto py-10 px-6 relative z-10">
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-10 gap-2">
           <div className="flex items-center gap-4">
             {session?.user?.image ? (
               <Image 
@@ -189,12 +189,12 @@ export default function Dashboard() {
               </div>
             )}
             <div>
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">
                 Hoş Geldin, {session?.user?.name || "Kullanıcı"}
               </h2>
             </div>
           </div>
-          <p className="text-white/70">
+          <p className="text-white/70 text-sm sm:text-base">
             Son aura sonuçların burada görüntüleniyor.
           </p>
         </div>
@@ -229,15 +229,15 @@ export default function Dashboard() {
                 ></div>
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold group-hover:text-purple-400 transition-colors">{aura.message}</h3>
+                    <h3 className="text-lg sm:text-xl font-bold group-hover:text-purple-400 transition-colors">{aura.message}</h3>
                     <div
-                      className={`w-10 h-10 rounded-full flex-shrink-0 ${getGradientClass(aura.color)} flex items-center justify-center text-white text-xs shadow-md`}
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex-shrink-0 ${getGradientClass(aura.color)} flex items-center justify-center text-white text-xs shadow-md`}
                     >
                       {aura.sentimentRatio > 0 ? '+'+(aura.sentimentRatio).toFixed(1) : (aura.sentimentRatio).toFixed(1)}
                     </div>
                   </div>
 
-                  <p className="text-white/70 line-clamp-3 mb-4 group-hover:text-white/90 transition-colors">
+                  <p className="text-white/70 text-sm sm:text-base line-clamp-3 mb-4 group-hover:text-white/90 transition-colors">
                     {aura.description}
                   </p>
 
@@ -263,15 +263,15 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:justify-between sm:items-center">
                     <div className="text-xs text-white/50">
                       {formatDate(aura.createdAt)}
                     </div>
                     
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 mt-2 sm:mt-0">
                       <button 
                         onClick={() => openDetailModal(aura)}
-                        className="text-purple-400 hover:text-purple-300 text-sm flex items-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        className="text-purple-400 hover:text-purple-300 text-sm flex items-center transition-colors cursor-pointer bg-purple-900/20 px-2 py-1 rounded"
                       >
                         Detaylı Gör
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -281,7 +281,7 @@ export default function Dashboard() {
                       
                       <button 
                         onClick={() => openDeleteModal(aura)}
-                        className="text-red-400 hover:text-red-300 text-sm flex items-center opacity-0 group-hover:opacity-100 transition-opacity ml-4 cursor-pointer"
+                        className="text-red-400 hover:text-red-300 text-sm flex items-center ml-2 cursor-pointer bg-red-900/20 px-2 py-1 rounded"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -309,11 +309,11 @@ export default function Dashboard() {
         {/* Aura Detay Modalı */}
         {detailModal && detailAura && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-xl border border-purple-500/30 max-w-3xl w-full max-h-[80vh] mx-auto backdrop-blur-sm shadow-xl flex flex-col">
+            <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-xl border border-purple-500/30 max-w-3xl w-full max-h-[90vh] mx-auto backdrop-blur-sm shadow-xl flex flex-col">
               {/* Header with sticky position */}
               <div className="sticky top-0 z-[5] bg-gradient-to-r from-gray-900 to-gray-800 p-4 rounded-t-lg shadow-lg">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1 mr-8">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                  <div className="flex-1 mr-8 mb-3 sm:mb-0">
                     <p className="text-gray-400 text-sm mb-1">Aura Analizi</p>
                     <h3 className="text-xl font-bold text-white">
                       {detailAura?.message || "Aura Sonucu"}
@@ -322,15 +322,15 @@ export default function Dashboard() {
                   
                   {/* Sentiment Score Badge */}
                   {detailAura?.sentimentScore !== undefined && (
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-row sm:flex-col items-center">
                       <div className={`
-                        flex items-center justify-center rounded-full w-14 h-14 mb-1
+                        flex items-center justify-center rounded-full w-12 h-12 sm:w-14 sm:h-14 mb-1
                         border-2 shadow-lg text-white font-bold
                         ${getSentimentClass(detailAura.sentimentScore)}
                       `}>
                         {(detailAura.sentimentScore * 100).toFixed(0)}%
                       </div>
-                      <span className="text-xs text-gray-300">
+                      <span className="text-xs text-gray-300 ml-2 sm:ml-0">
                         {getSentimentLabel(detailAura.sentimentScore)}
                       </span>
                     </div>
@@ -346,7 +346,7 @@ export default function Dashboard() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                    <span className="text-white text-sm">Kapat</span>
+                    <span className="text-white text-sm hidden sm:inline">Kapat</span>
                   </button>
                 </div>
               </div>
@@ -354,7 +354,7 @@ export default function Dashboard() {
               {/* Kaydırılabilir içerik bölümü */}
               <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {/* Aura içeriği */}
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   {/* Aura görsel */}
                   {detailAura.image && (
                     <div className="mb-6">
@@ -452,53 +452,53 @@ export default function Dashboard() {
               </div>
               
               {/* Footer - İşlemler - sabit kalacak */}
-              <div className="p-6 border-t border-white/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-gray-900/80 sticky bottom-0 z-[5]">
-                <div className="flex flex-wrap gap-3">
+              <div className="p-4 sm:p-6 border-t border-white/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-gray-900 sticky bottom-0 z-[5]">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   <button 
                     onClick={() => {
                       navigator.clipboard.writeText(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}\n\nAurascend uygulaması ile yaratıldı.`);
                       alert('Aura sonucu panoya kopyalandı!');
                     }}
-                    className="text-white/80 hover:text-white flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm cursor-pointer"
+                    className="text-white/80 hover:text-white flex items-center gap-1 transition-colors px-2 sm:px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs sm:text-sm cursor-pointer"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                     </svg>
-                    Kopyala
+                    <span>Kopyala</span>
                   </button>
                   
                   <a 
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}\n\nAurascend uygulaması ile yaratıldı.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm cursor-pointer"
+                    className="text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors px-2 sm:px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs sm:text-sm cursor-pointer"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
                     </svg>
-                    Twitter
+                    <span>Twitter</span>
                   </a>
                   
                   <a 
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm cursor-pointer"
+                    className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors px-2 sm:px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs sm:text-sm cursor-pointer"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.9 2H3.1A1.1 1.1 0 0 0 2 3.1v17.8A1.1 1.1 0 0 0 3.1 22h9.58v-7.75h-2.6v-3h2.6V9a3.64 3.64 0 0 1 3.88-4 20.26 20.26 0 0 1 2.33.12v2.7H17.3c-1.26 0-1.5.6-1.5 1.47v1.93h3l-.39 3H15.8V22h5.1a1.1 1.1 0 0 0 1.1-1.1V3.1A1.1 1.1 0 0 0 20.9 2Z" />
                     </svg>
-                    Facebook
+                    <span>Facebook</span>
                   </a>
                 </div>
                 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mt-2 sm:mt-0">
                   <button 
                     onClick={() => {
                       closeDetailModal();
                       openDeleteModal(detailAura);
                     }}
-                    className="text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors cursor-pointer"
+                    className="text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors cursor-pointer text-xs sm:text-sm bg-red-900/20 px-2 py-1 rounded"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -508,9 +508,9 @@ export default function Dashboard() {
                   
                   <button
                     onClick={closeDetailModal}
-                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
+                    className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2 cursor-pointer text-xs sm:text-sm"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     Kapat

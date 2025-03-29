@@ -314,7 +314,7 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.6 }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-full sm:w-auto"
+                      className="w-full"
                     >
                       <button 
                         onClick={scrollToAnalysis}
@@ -330,7 +330,7 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.7 }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-full sm:w-auto"
+                      className="w-full"
                     >
                       <Link 
                         href="/dashboard" 
@@ -348,10 +348,11 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.6 }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      className="w-full"
                     >
                       <Link 
                         href="/login" 
-                        className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                        className="w-full block px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
                       >
                         Hemen Başla
                       </Link>
@@ -362,10 +363,11 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.7 }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      className="w-full"
                     >
                       <Link 
                         href="/register" 
-                        className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                        className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
                       >
                         Ücretsiz Kaydol
                       </Link>
@@ -746,7 +748,7 @@ export default function Home() {
                 >
                   <button 
                     onClick={scrollToAnalysis}
-                    className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all whitespace-nowrap"
+                    className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
                   >
                     Auramı Analiz Et
                   </button>
@@ -758,7 +760,7 @@ export default function Home() {
                 >
                   <Link 
                     href="/dashboard" 
-                    className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all whitespace-nowrap"
+                    className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
                   >
                     Aura Geçmişimi Gör
                   </Link>
@@ -766,18 +768,26 @@ export default function Home() {
               </>
             ) : (
               <>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
                   <Link 
                     href="/login" 
-                    className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                    className="w-full block px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
                   >
                     Giriş Yap
                   </Link>
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
                   <Link 
                     href="/register" 
-                    className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                    className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
                   >
                     Ücretsiz Kaydol
                   </Link>
