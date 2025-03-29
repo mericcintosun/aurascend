@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const FeaturePage = () => {
   const [activeTab, setActiveTab] = useState('aura-colors');
@@ -53,60 +54,125 @@ const FeaturePage = () => {
     }
   ];
 
+  // Animasyon varyantları
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { type: "spring", stiffness: 50 }
+    }
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { duration: 0.6 }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
       <div className="absolute top-0 left-0 w-full h-96 bg-[url('/images/stars-bg.jpg')] bg-cover opacity-20 z-0"></div>
       
       <div className="max-w-6xl mx-auto px-4 py-16 relative z-10">
         {/* Header */}
-        <div className="mb-12 text-center">
+        <motion.div 
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
             Aurascend Özellikleri
           </h1>
           <p className="text-xl max-w-3xl mx-auto text-blue-100">
             Duygusal dünyayı keşfetmenin ve içsel yolculuğunuzu görselleştirmenin teknolojisi
           </p>
-        </div>
+        </motion.div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          
-          <button 
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4 mb-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          <motion.button 
+            onClick={() => setActiveTab('aura-colors')} 
+            className={`px-6 py-3 rounded-full text-lg font-medium transition ${
+              activeTab === 'aura-colors' 
+                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
+                : 'bg-blue-900/50 text-blue-200 hover:bg-blue-800/60'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Aura Renkleri
+          </motion.button>
+          <motion.button 
             onClick={() => setActiveTab('sentiment-analysis')} 
             className={`px-6 py-3 rounded-full text-lg font-medium transition ${
               activeTab === 'sentiment-analysis' 
                 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
                 : 'bg-blue-900/50 text-blue-200 hover:bg-blue-800/60'
             }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Duygu Analizi
-          </button>
-          <button 
+          </motion.button>
+          <motion.button 
             onClick={() => setActiveTab('detection-system')} 
             className={`px-6 py-3 rounded-full text-lg font-medium transition ${
               activeTab === 'detection-system' 
                 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
                 : 'bg-blue-900/50 text-blue-200 hover:bg-blue-800/60'
             }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Tespit Sistemi
-          </button>
-          <button 
+          </motion.button>
+          <motion.button 
             onClick={() => setActiveTab('ai-technologies')} 
             className={`px-6 py-3 rounded-full text-lg font-medium transition ${
               activeTab === 'ai-technologies' 
                 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
                 : 'bg-blue-900/50 text-blue-200 hover:bg-blue-800/60'
             }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Yapay Zeka Teknolojileri
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Content Section */}
-        <div className="bg-blue-900/30 backdrop-blur-sm rounded-3xl p-8 mb-16 shadow-xl border border-blue-800/50">
+        <motion.div 
+          className="bg-blue-900/30 backdrop-blur-sm rounded-3xl p-8 mb-16 shadow-xl border border-blue-800/50"
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           {activeTab === 'aura-colors' && (
-            <div>
+            <motion.div
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+            >
               <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
                 Aura Renkleri ve Anlamları
               </h2>
@@ -116,9 +182,19 @@ const FeaturePage = () => {
                 İşte Aurascend&apos;in kullandığı temel aura renkleri ve anlamları:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              <motion.div 
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
                 {auraExamples.map((aura, index) => (
-                  <div key={index} className="rounded-xl overflow-hidden shadow-lg border border-blue-700/30">
+                  <motion.div 
+                    key={index} 
+                    className="rounded-xl overflow-hidden shadow-lg border border-blue-700/30"
+                    variants={itemVariants}
+                    whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                  >
                     <div className={`h-40 bg-gradient-to-r ${aura.color} p-4 flex items-end`}>
                       <h3 className="text-2xl font-bold text-white drop-shadow-md">{aura.name}</h3>
                     </div>
@@ -132,16 +208,18 @@ const FeaturePage = () => {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-
-              
-            </div>
+              </motion.div>
+            </motion.div>
           )}
 
           {activeTab === 'sentiment-analysis' && (
-            <div>
+            <motion.div
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+            >
               <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
                 Duygu Analizi Teknolojisi
               </h2>
@@ -150,8 +228,16 @@ const FeaturePage = () => {
                 Tam olarak nasıl çalıştığını keşfedin:
               </p>
 
-              <div className="space-y-10">
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+              <motion.div 
+                className="space-y-10"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4 flex items-center">
                     <span className="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-500 mr-3">1</span>
                     Metin Parçalama
@@ -166,9 +252,12 @@ const FeaturePage = () => {
                       </code>
                     </pre>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4 flex items-center">
                     <span className="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-500 mr-3">2</span>
                     Anahtar Kelime Tespiti
@@ -184,9 +273,12 @@ const FeaturePage = () => {
                   <p>
                     Her kelimenin metindeki bağlamı da dikkate alınır, böylece &quot;hiç mutlu değilim&quot; gibi ifadelerde &quot;mutlu&quot; kelimesi pozitif değil, negatif bağlamda değerlendirilir.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4 flex items-center">
                     <span className="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-500 mr-3">3</span>
                     Duygu Oranları Hesaplama
@@ -211,9 +303,12 @@ const FeaturePage = () => {
                     <li>-0.5 ile 0 arası: Hafif negatif duygular</li>
                     <li>-0.5 altı: Güçlü negatif duygular</li>
                   </ul>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4 flex items-center">
                     <span className="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-500 mr-3">4</span>
                     Bağlamsal Analiz
@@ -237,13 +332,17 @@ const FeaturePage = () => {
                     <li>Yakınlık kalıpları: Farklı duygu ifadelerinin yakınlığı</li>
                     <li>Son cümle analizi: Metindeki son cümleye daha fazla ağırlık verilir</li>
                   </ul>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           )}
 
           {activeTab === 'detection-system' && (
-            <div>
+            <motion.div
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+            >
               <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
                 Aura Tespit Sistemi
               </h2>
@@ -252,8 +351,16 @@ const FeaturePage = () => {
                 Bu süreç tamamen kişiselleştirilmiş ve her metne özgü sonuçlar üretir.
               </p>
 
-              <div className="space-y-10">
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+              <motion.div 
+                className="space-y-10"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4">Tespit Aşamaları</h3>
                   <ol className="list-decimal list-inside space-y-4 pl-2">
                     <li className="pl-2">
@@ -292,9 +399,12 @@ const FeaturePage = () => {
                       </p>
                     </li>
                   </ol>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4">Çıktı Yapısı</h3>
                   <p className="mb-4">
                     Aurascend analiz sonucunda şu bilgileri içeren kapsamlı bir aura çıktısı oluşturur:
@@ -319,9 +429,12 @@ const FeaturePage = () => {
                       </code>
                     </pre>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4">Özel Durumlar</h3>
                   <p className="mb-4">
                     Aurascend&apos;in tespit sistemi, bazı özel durumlara karşı duyarlıdır:
@@ -343,13 +456,17 @@ const FeaturePage = () => {
                       <span className="font-medium">Çift Olumsuzlama:</span> &quot;Mutsuz değilim&quot; gibi çift olumsuzlama içeren ifadeler özel olarak işlenir.
                     </li>
                   </ul>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           )}
-
+          
           {activeTab === 'ai-technologies' && (
-            <div>
+            <motion.div
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+            >
               <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
                 Kullanılan Yapay Zeka Teknolojileri
               </h2>
@@ -358,8 +475,16 @@ const FeaturePage = () => {
                 Size en iyi deneyimi sunabilmek için farklı alanlarda uzmanlaşmış AI modellerinden yararlanıyoruz.
               </p>
 
-              <div className="space-y-8">
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-purple-500/10">
+              <motion.div 
+                className="space-y-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-purple-500/10"
+                  variants={itemVariants}
+                >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center mr-4 shadow-lg shadow-purple-500/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -385,9 +510,12 @@ const FeaturePage = () => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-green-500/10">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-green-500/10"
+                  variants={itemVariants}
+                >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center mr-4 shadow-lg shadow-green-500/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -414,9 +542,12 @@ const FeaturePage = () => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-pink-500/10">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-pink-500/10"
+                  variants={itemVariants}
+                >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center mr-4 shadow-lg shadow-pink-500/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -442,9 +573,12 @@ const FeaturePage = () => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-amber-500/10">
+                <motion.div 
+                  className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50 hover:shadow-lg transition-all hover:shadow-amber-500/10"
+                  variants={itemVariants}
+                >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center mr-4 shadow-lg shadow-amber-500/20">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -462,9 +596,12 @@ const FeaturePage = () => {
                       zenginleştiriyor ve duygusal etkiyi derinleştiriyor.
                     </p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-gradient-to-r from-violet-900/40 to-purple-900/40 rounded-xl p-8 border border-violet-700/30 mt-8 shadow-lg shadow-violet-500/10">
+                <motion.div 
+                  className="bg-gradient-to-r from-violet-900/40 to-purple-900/40 rounded-xl p-8 border border-violet-700/30 mt-8 shadow-lg shadow-violet-500/10"
+                  variants={itemVariants}
+                >
                   <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300">Teknoloji Seçimlerimiz</h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
@@ -493,18 +630,39 @@ const FeaturePage = () => {
                       gerçekleştiriyor ve verilerinizi hiçbir şekilde üçüncü taraflarla paylaşmıyoruz.
                     </p>
                   </div>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           )}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center">
-          <Link href="/" className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-lg font-medium shadow-lg shadow-purple-700/30 hover:from-purple-700 hover:to-pink-700 transition">
-            Kendi Auranı Keşfet
-          </Link>
-        </div>
+        </motion.div>
+        
+        {/* Footer CTA */}
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
+              Aurascend&apos;i Hemen Deneyin
+            </span>
+          </h2>
+          <p className="mb-8 max-w-2xl mx-auto text-blue-100">
+            İçsel enerjinizi keşfetmenin, duygusal farkındalığınızı artırmanın ve ruhsal yolculuğunuzu görselleştirmenin zamanı geldi.
+          </p>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link 
+              href="/" 
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg inline-block transition-all"
+            >
+              Auramı Analiz Et
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

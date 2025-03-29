@@ -124,51 +124,52 @@ export default function AuraPlayer({ musicFile }) {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className={`w-full rounded-lg bg-gradient-to-r from-purple-800 to-violet-900 p-4 text-white shadow-lg transition-all duration-300`}>
-      <div className="flex flex-col">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center">
+    <div className="w-full rounded-lg bg-gradient-to-r from-purple-800 to-violet-900 p-4 text-white shadow-lg transition-all duration-300">
+      <div className="flex flex-col w-full">
+        <div className="mb-4">
+          <h3 className="text-base font-medium text-center mb-2">Auranın Müziği</h3>
+          
+          {/* Zaman göstergesi */}
+          <div className="text-center text-xs opacity-70 mb-2">
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </div>
+          
+          {/* Oynatma kontrolleri */}
+          <div className="flex items-center justify-center space-x-4 mb-3">
             <button
               onClick={togglePlay}
-              className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-900 shadow-md hover:bg-gray-100 transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-purple-900 shadow-md hover:bg-gray-100 transition-colors"
               aria-label={isPlaying ? "Pause" : "Play"}
               type="button"
-              style={{zIndex: 10}}
             >
               {isPlaying ? <FaPause /> : <FaPlay />}
             </button>
-            <div>
-              <p className="text-sm font-medium">Auranın Müziği</p>
-              <p className="text-xs opacity-70">{formatTime(currentTime)} / {formatTime(duration)}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={toggleMute}
-              className="text-white hover:text-gray-200 transition-colors"
-              aria-label={isMuted ? "Unmute" : "Mute"}
-              type="button"
-              style={{zIndex: 10}}
-            >
-              {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-            </button>
             
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="h-2 w-20 cursor-pointer appearance-none rounded-lg bg-white bg-opacity-30"
-              aria-label="Volume"
-              style={{zIndex: 10}}
-            />
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={toggleMute}
+                className="text-white hover:text-gray-200 transition-colors p-1"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+                type="button"
+              >
+                {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+              </button>
+              
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="h-2 w-20 sm:w-24 cursor-pointer appearance-none rounded-lg bg-white bg-opacity-30"
+                aria-label="Volume"
+              />
+            </div>
           </div>
         </div>
         
-        {/* Progress Bar */}
+        {/* İlerleme çubuğu */}
         <div className="relative w-full h-3 bg-purple-900 bg-opacity-50 rounded-full cursor-pointer group">
           <div 
             className="absolute top-0 left-0 h-full bg-white bg-opacity-70 rounded-full transition-all duration-100"
@@ -182,11 +183,10 @@ export default function AuraPlayer({ musicFile }) {
             value={currentTime}
             onChange={handleProgressChange}
             className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer pointer-events-auto"
-            style={{zIndex: 10}}
             aria-label="Progress"
           />
           
-          {/* Optional: Time bubbles that appear on hover */}
+          {/* Hover durumunda görünen zaman baloncuğu */}
           <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 pointer-events-none">
             <div 
               className="absolute -top-7 px-2 py-1 rounded bg-purple-800 text-xs text-white transform -translate-x-1/2"
