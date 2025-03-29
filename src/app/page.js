@@ -449,6 +449,15 @@ export default function Home() {
               </div>
             ))}
           </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              href="/features" 
+              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg inline-block transition-all"
+            >
+              Detaylı Bilgi
+            </Link>
+          </div>
         </div>
       </section>
       
