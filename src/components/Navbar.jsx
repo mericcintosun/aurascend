@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 
 // NavLink bileşeni - aktif sayfayı vurgular
 const NavLink = ({ href, children, onClick }) => {
@@ -119,7 +120,12 @@ export default function Navbar() {
                   {session.user.name || session.user.email}
                 </span>
                 <motion.button
-                  onClick={() => signOut({ callbackUrl: "/" })}
+                  onClick={() => {
+                    const toastId = toast.loading('Çıkış yapılıyor...');
+                    signOut({ callbackUrl: "/" }).then(() => {
+                      toast.success('Başarıyla çıkış yapıldı', { id: toastId });
+                    });
+                  }}
                   className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -154,9 +160,9 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href="/auth/login"
+                    href="/login"
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname?.startsWith("/auth/login")
+                      pathname?.startsWith("/login")
                         ? "bg-purple-700 text-white"
                         : "bg-purple-600 hover:bg-purple-700 text-white"
                     }`}
@@ -169,9 +175,9 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href="/auth/register"
+                    href="/register"
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname?.startsWith("/auth/register")
+                      pathname?.startsWith("/register")
                         ? "bg-blue-700 text-white"
                         : "bg-blue-600 hover:bg-blue-700 text-white"
                     }`}
@@ -276,8 +282,11 @@ export default function Navbar() {
                     </motion.div>
                     <motion.button
                       onClick={() => {
-                        signOut({ callbackUrl: "/" });
                         setIsMenuOpen(false);
+                        const toastId = toast.loading('Çıkış yapılıyor...');
+                        signOut({ callbackUrl: "/" }).then(() => {
+                          toast.success('Başarıyla çıkış yapıldı', { id: toastId });
+                        });
                       }}
                       className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-red-700 hover:text-white"
                       whileTap={{ scale: 0.95 }}
@@ -290,9 +299,9 @@ export default function Navbar() {
                 <div className="pt-4 pb-3 border-t border-blue-800">
                   <motion.div whileTap={{ scale: 0.95 }}>
                     <Link
-                      href="/auth/login"
+                      href="/login"
                       className={`block w-full text-center px-3 py-2 rounded-md text-base font-medium mb-2 ${
-                        pathname?.startsWith("/auth/login")
+                        pathname?.startsWith("/login")
                           ? "bg-purple-700 text-white"
                           : "bg-purple-600 hover:bg-purple-700 text-white"
                       }`}
@@ -303,9 +312,9 @@ export default function Navbar() {
                   </motion.div>
                   <motion.div whileTap={{ scale: 0.95 }}>
                     <Link
-                      href="/auth/register"
+                      href="/register"
                       className={`block w-full text-center px-3 py-2 rounded-md text-base font-medium ${
-                        pathname?.startsWith("/auth/register")
+                        pathname?.startsWith("/register")
                           ? "bg-blue-700 text-white"
                           : "bg-blue-600 hover:bg-blue-700 text-white"
                       }`}

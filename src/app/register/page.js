@@ -255,7 +255,7 @@ export default function Register() {
           <div className="text-center">
             <p className="text-white/70">
               Zaten bir hesabınız var mı? 
-              <Link href="/auth/login" className="text-purple-400 hover:text-purple-300 ml-1">
+              <Link href="/login" className="text-purple-400 hover:text-purple-300 ml-1">
                 Giriş Yap
               </Link>
             </p>

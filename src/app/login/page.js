@@ -6,15 +6,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-export default function Register() {
+export default function Login() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
 
   const handleGoogleSignIn = async () => {
@@ -22,18 +20,18 @@ export default function Register() {
     setError('');
     
     try {
-      const toastId = toast.loading('Google ile kayıt yapılıyor...');
+      const toastId = toast.loading('Google ile giriş yapılıyor...');
       const result = await signIn('google', { callbackUrl: '/' });
       
       if (result?.error) {
-        toast.error(result.error || 'Kayıt başarısız', { id: toastId });
+        toast.error(result.error || 'Giriş başarısız', { id: toastId });
         setError(result.error);
       } else {
-        toast.success('Kayıt başarılı! Yönlendiriliyorsunuz...', { id: toastId });
+        toast.success('Giriş başarılı! Yönlendiriliyorsunuz...', { id: toastId });
       }
     } catch (error) {
-      toast.error('Kayıt sırasında bir hata oluştu');
-      setError('Kayıt sırasında bir hata oluştu');
+      toast.error('Giriş sırasında bir hata oluştu');
+      setError('Giriş sırasında bir hata oluştu: ' + error.message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -50,78 +48,34 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate form data
-    if (formData.password !== formData.confirmPassword) {
-      toast.error('Şifreler eşleşmiyor');
-      setError('Şifreler eşleşmiyor');
-      return;
-    }
-    
-    if (formData.password.length < 6) {
-      toast.error('Şifre en az 6 karakter olmalıdır');
-      setError('Şifre en az 6 karakter olmalıdır');
-      return;
-    }
-    
     setLoading(true);
     setError('');
     
     try {
-      const toastId = toast.loading('Hesabınız oluşturuluyor...');
+      const toastId = toast.loading('Giriş yapılıyor...');
       
-      // Register the user
-      console.log('Sending registration request with data:', {
-        name: formData.name,
-        email: formData.email,
-        password: '******' // Don't log actual password
-      });
-      
-      const registerResponse = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      
-      const data = await registerResponse.json();
-      console.log('Registration response status:', registerResponse.status);
-      console.log('Registration response data:', data);
-      
-      if (!registerResponse.ok) {
-        toast.error(data.message || 'Kayıt sırasında bir hata oluştu', { id: toastId });
-        throw new Error(data.message || 'Kayıt sırasında bir hata oluştu');
-      }
-      
-      toast.success('Hesabınız başarıyla oluşturuldu! Giriş yapılıyor...', { id: toastId });
-      
-      // If registration successful, sign in the user
-      const signInResult = await signIn('credentials', {
+      const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
         redirect: false,
       });
       
-      if (signInResult?.error) {
-        let errorMessage = signInResult.error;
-        if (signInResult.error === 'CredentialsSignin') {
-          errorMessage = 'Kayıt başarılı ancak giriş yapılamadı: Hatalı kimlik bilgileri';
+      if (result?.error) {
+        let errorMessage = result.error;
+        if (result.error === 'CredentialsSignin') {
+          errorMessage = 'Hatalı e-posta veya şifre girdiniz';
         }
         
-        toast.error(errorMessage);
+        toast.error(errorMessage, { id: toastId });
         setError(errorMessage);
       } else {
+        toast.success('Giriş başarılı! Yönlendiriliyorsunuz...', { id: toastId });
         router.push('/');
       }
     } catch (error) {
-      toast.error(error.message || 'Kayıt sırasında bir hata oluştu');
-      setError(error.message || 'Kayıt sırasında bir hata oluştu');
-      console.error('Registration error details:', error);
+      toast.error('Giriş sırasında bir hata oluştu');
+      setError('Giriş sırasında bir hata oluştu');
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -130,7 +84,7 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-900 to-black p-4">
       <div className="w-full max-w-md bg-white/5 backdrop-blur-lg rounded-xl p-8 shadow-2xl border border-white/10">
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">Kayıt Ol</h2>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">Giriş Yap</h2>
         
         {error && (
           <div className="mb-4 p-4 bg-red-500/20 border border-red-500/50 text-red-100 rounded-lg">
@@ -139,22 +93,6 @@ export default function Register() {
         )}
         
         <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-          <div>
-            <label htmlFor="name" className="block text-white/80 mb-1 text-sm">
-              İsim
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="İsminiz"
-            />
-          </div>
-          
           <div>
             <label htmlFor="email" className="block text-white/80 mb-1 text-sm">
               E-posta
@@ -184,25 +122,6 @@ export default function Register() {
               required
               className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               placeholder="••••••••"
-              minLength={6}
-            />
-            <p className="text-xs text-white/50 mt-1">En az 6 karakter</p>
-          </div>
-          
-          <div>
-            <label htmlFor="confirmPassword" className="block text-white/80 mb-1 text-sm">
-              Şifre Tekrarı
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              placeholder="••••••••"
-              minLength={6}
             />
           </div>
           
@@ -211,7 +130,7 @@ export default function Register() {
             disabled={loading}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-md"
           >
-            {loading ? 'İşleniyor...' : 'Kayıt Ol'}
+            {loading ? 'İşleniyor...' : 'Giriş Yap'}
           </button>
         </form>
         
@@ -247,16 +166,16 @@ export default function Register() {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                   <path d="M1 1h22v22H1z" fill="none"/>
                 </svg>
-                Google ile Kayıt Ol
+                Google ile Giriş Yap
               </>
             )}
           </button>
           
           <div className="text-center">
             <p className="text-white/70">
-              Zaten bir hesabınız var mı? 
-              <Link href="/auth/login" className="text-purple-400 hover:text-purple-300 ml-1">
-                Giriş Yap
+              Henüz bir hesabınız yok mu? 
+              <Link href="/register" className="text-purple-400 hover:text-purple-300 ml-1">
+                Kayıt Ol
               </Link>
             </p>
           </div>

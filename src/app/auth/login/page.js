@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const router = useRouter();
@@ -19,11 +20,17 @@ export default function Login() {
     setError('');
     
     try {
+      const toastId = toast.loading('Google ile giriş yapılıyor...');
       const result = await signIn('google', { callbackUrl: '/' });
+      
       if (result?.error) {
+        toast.error(result.error || 'Giriş başarısız', { id: toastId });
         setError(result.error);
+      } else {
+        toast.success('Giriş başarılı! Yönlendiriliyorsunuz...', { id: toastId });
       }
     } catch (error) {
+      toast.error('Giriş sırasında bir hata oluştu');
       setError('Giriş sırasında bir hata oluştu: ' + error.message);
       console.error(error);
     } finally {
@@ -45,6 +52,8 @@ export default function Login() {
     setError('');
     
     try {
+      const toastId = toast.loading('Giriş yapılıyor...');
+      
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
@@ -52,11 +61,19 @@ export default function Login() {
       });
       
       if (result?.error) {
-        setError(result.error);
+        let errorMessage = result.error;
+        if (result.error === 'CredentialsSignin') {
+          errorMessage = 'Hatalı e-posta veya şifre girdiniz';
+        }
+        
+        toast.error(errorMessage, { id: toastId });
+        setError(errorMessage);
       } else {
+        toast.success('Giriş başarılı! Yönlendiriliyorsunuz...', { id: toastId });
         router.push('/');
       }
     } catch (error) {
+      toast.error('Giriş sırasında bir hata oluştu');
       setError('Giriş sırasında bir hata oluştu');
       console.error(error);
     } finally {

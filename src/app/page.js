@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { Spinner } from '@/components/Spinner';
 import AuraPlayer from '../components/AuraPlayer';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 // NOT: Client component'ler metadata export edemez
 // metadata için layout.js dosyasını kullanın
@@ -23,8 +24,19 @@ export default function Home() {
   const [saveError, setSaveError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   
+  // Welcome mesajı tekrarını önlemek için ref kullanımı
+  const welcomeShown = useRef(false);
+  
   // Hero bölümündeki animasyon için kullanılacak state
   const [animateTitle, setAnimateTitle] = useState(false);
+  
+  // Giriş durumunu bildirmek için
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user && !welcomeShown.current) {
+      welcomeShown.current = true;
+      toast.success(`Hoş geldin, ${session.user.name || 'misafir'}!`);
+    }
+  }, [status, session]);
   
   // Scroll animasyonları için ref'ler
   const analyzeRef = useRef(null);
@@ -231,7 +243,12 @@ export default function Home() {
     }
   ];
   
-
+  const handleSignOut = async () => {
+    const toastId = toast.loading('Çıkış yapılıyor...');
+    await signOut({ redirect: false });
+    toast.success('Başarıyla çıkış yapıldı', { id: toastId });
+    router.push('/');
+  };
   
   if (status === 'loading') {
     return (
@@ -333,7 +350,7 @@ export default function Home() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link 
-                        href="/auth/login" 
+                        href="/login" 
                         className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
                       >
                         Hemen Başla
@@ -347,7 +364,7 @@ export default function Home() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link 
-                        href="/auth/register" 
+                        href="/register" 
                         className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
                       >
                         Ücretsiz Kaydol
@@ -750,7 +767,7 @@ export default function Home() {
               <>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link 
-                    href="/auth/login" 
+                    href="/login" 
                     className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
                   >
                     Giriş Yap
@@ -758,7 +775,7 @@ export default function Home() {
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link 
-                    href="/auth/register" 
+                    href="/register" 
                     className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
                   >
                     Ücretsiz Kaydol

@@ -24,7 +24,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Geçersiz kimlik bilgileri");
+          throw new Error("E-posta ve şifre alanları boş bırakılamaz");
         }
 
         const user = await prisma.user.findUnique({
@@ -34,7 +34,7 @@ export const authOptions = {
         });
 
         if (!user || !user?.hashedPassword) {
-          throw new Error("Geçersiz kimlik bilgileri");
+          throw new Error("Bu e-posta adresi ile kayıtlı bir kullanıcı bulunamadı");
         }
 
         const isCorrectPassword = await bcrypt.compare(
@@ -43,7 +43,7 @@ export const authOptions = {
         );
 
         if (!isCorrectPassword) {
-          throw new Error("Geçersiz şifre");
+          throw new Error("Hatalı şifre girdiniz. Lütfen tekrar deneyin");
         }
 
         return user;
@@ -51,7 +51,7 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
