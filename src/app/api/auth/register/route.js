@@ -4,20 +4,14 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request) {
   try {
-    console.log('Register API route called');
+    
     const body = await request.json();
     const { name, email, password } = body;
     
-    console.log('Registration request received for email:', email);
     
     // Validate input
     if (!email || !email.includes('@') || !password || password.length < 6) {
-      console.log('Validation failed:', { 
-        hasEmail: !!email, 
-        validEmail: email?.includes('@'), 
-        hasPassword: !!password, 
-        validPasswordLength: password?.length >= 6 
-      });
+      
       
       return NextResponse.json(
         { message: 'Geçersiz e-posta veya şifre' },
@@ -26,14 +20,13 @@ export async function POST(request) {
     }
     
     // Check if user already exists
-    console.log('Checking if user exists with email:', email);
     try {
       const existingUser = await prisma.user.findUnique({
         where: { email }
       });
       
       if (existingUser) {
-        console.log('User already exists with email:', email);
+        
         return NextResponse.json(
           { message: 'Bu e-posta adresi zaten kullanılıyor' },
           { status: 400 }
@@ -45,11 +38,11 @@ export async function POST(request) {
     }
     
     // Hash password
-    console.log('Hashing password');
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     
     // Create new user
-    console.log('Creating new user with email:', email);
+    
     const user = await prisma.user.create({
       data: {
         name,
@@ -58,7 +51,6 @@ export async function POST(request) {
       }
     });
     
-    console.log('User created successfully:', user.id);
     
     // Don't send the password in the response
     const { password: _, ...userWithoutPassword } = user;

@@ -71,11 +71,7 @@ export default function Register() {
       const toastId = toast.loading('Hesabınız oluşturuluyor...');
       
       // Register the user
-      console.log('Sending registration request with data:', {
-        name: formData.name,
-        email: formData.email,
-        password: '******' // Don't log actual password
-      });
+      
       
       const registerResponse = await fetch('/api/auth/register', {
         method: 'POST',
@@ -90,8 +86,6 @@ export default function Register() {
       });
       
       const data = await registerResponse.json();
-      console.log('Registration response status:', registerResponse.status);
-      console.log('Registration response data:', data);
       
       if (!registerResponse.ok) {
         toast.error(data.message || 'Kayıt sırasında bir hata oluştu', { id: toastId });

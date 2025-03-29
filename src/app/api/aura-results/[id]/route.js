@@ -72,11 +72,7 @@ export async function DELETE(request, { params }) {
       }, { status: 400 });
     }
     
-    console.log('Silme işlemi için:', { id, userId: session.user.id });
-    console.log('Oturum bilgileri:', { 
-      userId: session.user.id,
-      userEmail: session.user.email
-    });
+
     
     try {
       // Kullanıcı e-postası üzerinden kullanıcıyı bul
@@ -98,7 +94,6 @@ export async function DELETE(request, { params }) {
       
       // Kullanıcının gerçek ID'sini kullan
       const userId = user.id;
-      console.log('Veritabanından bulunan kullanıcı ID:', userId);
       
       // Kullanıcıya ait aurayı bul
       const existingAura = await prisma.auraResult.findFirst({
@@ -113,7 +108,6 @@ export async function DELETE(request, { params }) {
         }
       });
       
-      console.log('Bulunan aura:', existingAura);
       
       if (!existingAura) {
         return NextResponse.json({ 
@@ -129,7 +123,6 @@ export async function DELETE(request, { params }) {
         }
       });
       
-      console.log('Aura başarıyla silindi:', deletedAura);
       
       return NextResponse.json({ 
         success: true, 

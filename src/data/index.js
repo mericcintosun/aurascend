@@ -804,17 +804,13 @@ export const findMatchingKeywords = (text) => {
 
   // Önce derin metin analizi yap
   const contextAnalysis = deepContextAnalysis(text);
-  console.log("Bağlam analizi:", contextAnalysis);
 
   // Ciddi yaşam olayları varsa, bunlara öncelik ver
   if (
     contextAnalysis.seriousLifeEvents &&
     contextAnalysis.seriousLifeEvents.length > 0
   ) {
-    console.log(
-      "Ciddi yaşam olayları tespit edildi:",
-      contextAnalysis.seriousLifeEvents
-    );
+
     return [
       {
         keyword: "yaşam olayı: " + contextAnalysis.seriousLifeEvents[0],
@@ -828,10 +824,7 @@ export const findMatchingKeywords = (text) => {
     contextAnalysis.hasStrongNegationPatterns &&
     contextAnalysis.proximityPatterns.length > 0
   ) {
-    console.log(
-      "Yakınlık kalıpları tespit edildi:",
-      contextAnalysis.proximityPatterns
-    );
+    
     // Proximity pattern'lere göre negatif grup seç
     return [
       {
@@ -847,7 +840,7 @@ export const findMatchingKeywords = (text) => {
     contextAnalysis.adjustedScore + contextAnalysis.lastSentenceScore < -2 ||
     contextAnalysis.negativeSentences > contextAnalysis.positiveSentences + 1
   ) {
-    console.log("Derin analiz sonucu negatif bağlam tespit edildi");
+    
     return [
       {
         keyword: "negatif bağlam",
@@ -864,7 +857,6 @@ export const findMatchingKeywords = (text) => {
       text.toLowerCase().includes("nasıl hissettiğimi") ||
       text.toLowerCase().includes("ne hissettiğimi"))
   ) {
-    console.log("Belirsiz duygular tespit edildi");
     const outputs = getAllOutputs();
     return [
       {
@@ -877,7 +869,6 @@ export const findMatchingKeywords = (text) => {
   // Önce doğrudan olumsuz kalıpları kontrol et
   const directPattern = checkDirectNegationPatterns(text);
   if (directPattern.found) {
-    console.log("Doğrudan olumsuz kalıp bulundu:", directPattern.keyword);
     // Özel bir olumsuz duygu durumu varsa, doğrudan onu döndür
     const negativeItem = {
       keyword: directPattern.keyword,
@@ -930,9 +921,6 @@ export const findMatchingKeywords = (text) => {
       if (!negated) {
         matches.push(item);
       } else {
-        console.log(
-          `Olumsuzlanmış kelime: ${keyword} (pozisyon: ${keywordIndex})`
-        );
         negatedKeywords.push(item);
       }
 
@@ -949,9 +937,7 @@ export const findMatchingKeywords = (text) => {
     (negatedKeywords.length > 0 && negativeMatches.length > 0) ||
     (hasNegations && negativeMatches.length > 0)
   ) {
-    console.log(
-      "Olumsuzlanmış kelimeler var, olumsuz bağlam kelimeleri kullanılıyor"
-    );
+    
     return [...negativeMatches, ...matches]; // Olumsuz bağlam kelimelerine öncelik ver
   }
 
@@ -967,7 +953,6 @@ export const findMatchingKeywords = (text) => {
     );
 
     if (negativeGroups.length > 0) {
-      console.log("Son cümle negatif, negatif kelimelere öncelik veriliyor");
       return [
         ...negativeGroups,
         ...matches.filter((m) => !negativeGroups.includes(m)),
@@ -1240,7 +1225,6 @@ export const analyzeAuraFromText = (text) => {
   // İlk olarak doğrudan kalıpları kontrol et
   const directPatternResult = checkDirectNegationPatterns(text);
   if (directPatternResult.found) {
-    console.log("Direkt kalıp bulundu:", directPatternResult);
     const outputs = getAllOutputs();
     return {
       output: outputs[directPatternResult.group],
@@ -1259,17 +1243,13 @@ export const analyzeAuraFromText = (text) => {
 
   // Derinlemesine bağlam analizi yap
   const contextAnalysis = deepContextAnalysis(text);
-  console.log("Bağlam analizi:", contextAnalysis);
 
   // Ciddi yaşam olayları kontrolü
   if (
     contextAnalysis.seriousLifeEvents &&
     contextAnalysis.seriousLifeEvents.length > 0
   ) {
-    console.log(
-      "Ciddi yaşam olayları tespit edildi:",
-      contextAnalysis.seriousLifeEvents
-    );
+    
     const outputs = getAllOutputs();
     return {
       output: outputs[contextAnalysis.dominantGroup || "negatif_1"],
@@ -1294,7 +1274,6 @@ export const analyzeAuraFromText = (text) => {
       text.toLowerCase().includes("nasıl hissettiğimi") ||
       text.toLowerCase().includes("ne hissettiğimi"))
   ) {
-    console.log("Belirsiz duygular tespit edildi");
     const outputs = getAllOutputs();
     return {
       output: outputs["belirsiz_1"],
@@ -1313,7 +1292,6 @@ export const analyzeAuraFromText = (text) => {
 
   // Özel durum: Negatif duyguların olmadığını belirten ifadeler varsa pozitife dönüştür
   if (contextAnalysis.specialNegativeEmotionNegatedPatterns.length > 0) {
-    console.log("Özel durum: Negatif duygu yokluğu ifadesi tespit edildi");
     const outputs = getAllOutputs();
 
     // İfade içeriğine göre uygun pozitif grubu seç
@@ -1356,10 +1334,7 @@ export const analyzeAuraFromText = (text) => {
     contextAnalysis.hasStrongNegationPatterns &&
     contextAnalysis.proximityPatterns.length > 0
   ) {
-    console.log(
-      "Güçlü yakınlık kalıpları tespit edildi:",
-      contextAnalysis.proximityPatterns
-    );
+    
     const outputs = getAllOutputs();
 
     // Negatif duygulu bir grup seç
@@ -1401,7 +1376,6 @@ export const analyzeAuraFromText = (text) => {
     contextAnalysis.lastSentenceScore < -1 ||
     contextAnalysis.adjustedScore < -2
   ) {
-    console.log("Genel negatif ton tespit edildi");
     const outputs = getAllOutputs();
     return {
       output: outputs[contextAnalysis.dominantGroup || "negatif_1"],
@@ -1421,7 +1395,6 @@ export const analyzeAuraFromText = (text) => {
   // Özel durum: "mutluyum bu" gibi pozitif vurgular
   const positiveStatements = checkForPositiveStatements(text);
   if (positiveStatements.length > 0) {
-    console.log("Özel durum: Pozitif durumun vurgulanması tespit edildi");
     const outputs = getAllOutputs();
 
     // İfade içeriğine göre uygun pozitif grubu seç
@@ -1455,7 +1428,6 @@ export const analyzeAuraFromText = (text) => {
   if (text.toLowerCase().includes('ilgi duymak') || 
       text.toLowerCase().includes('ilgi duyma') || 
       text.toLowerCase().includes('ilgi duyduğum')) {
-    console.log("İlgi duymak tespit edildi, zihinsel_1 olarak işleniyor");
     return [{
       keyword: "meraklı",
       group: "zihinsel_1"
@@ -1491,7 +1463,7 @@ export const analyzeAuraFromText = (text) => {
       : "Nötr";
 
   if (matchingKeywords.length > 0) {
-    console.log("Bulunan eşleşen kelimeler:", matchingKeywords);
+    
 
     // Negatif kelimelere öncelik ver
     const negativeKeywords = matchingKeywords.filter(

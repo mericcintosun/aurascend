@@ -32,12 +32,7 @@ export default function Dashboard() {
     if (status === "authenticated") {
       fetchAuraResults();
       
-      // Oturum bilgilerini kontrol et ve konsola yazdır
-      console.log("Oturum Bilgileri:", {
-        userId: session.user.id,
-        userEmail: session.user.email,
-        userName: session.user.name
-      });
+    
     }
   }, [status, session]);
 
@@ -107,8 +102,6 @@ export default function Dashboard() {
       setDeleting(true);
       setDeleteError(null);
       
-      console.log('Silme isteği gönderiliyor:', selectedAura.id);
-      console.log('Kullanıcı ID:', session?.user?.id);
       
       const response = await fetch(`/api/aura-results/${selectedAura.id}`, {
         method: 'DELETE',
@@ -120,7 +113,6 @@ export default function Dashboard() {
       let responseData;
       try {
         responseData = await response.json();
-        console.log('Silme API yanıtı:', responseData);
       } catch (jsonError) {
         console.error('API yanıtı JSON olarak çözümlenemedi:', jsonError);
         throw new Error('Sunucu yanıtı beklenmeyen formatta, yeniden deneyin');

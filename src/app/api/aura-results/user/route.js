@@ -18,7 +18,6 @@ export async function GET(request) {
     // Kullanıcının ID'sini al
     const userId = session.user.id;
     
-    console.log("Session user ID:", userId);
 
     // Sorgu parametrelerini al
     const { searchParams } = new URL(request.url);
