@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -18,6 +18,8 @@ export default function Dashboard() {
   const [selectedAura, setSelectedAura] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
+  const [detailModal, setDetailModal] = useState(false);
+  const [detailAura, setDetailAura] = useState(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -41,7 +43,7 @@ export default function Dashboard() {
   const fetchAuraResults = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/aura-results?limit=5");
+      const response = await fetch("/api/aura-results?limit=10");
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -64,6 +66,16 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/auth/login" });
+  };
+
+  const getGradientClass = (color) => {
+    if (!color) return "bg-gradient-to-r from-purple-600 to-blue-600";
+    
+    // Eğer zaten bir gradient ise
+    if (color.startsWith("from-")) return `bg-gradient-to-r ${color}`;
+    
+    // Tek renk için gradient oluştur
+    return `bg-gradient-to-r from-${color}-500 to-${color}-700`;
   };
 
   const handleDeleteAura = async () => {
@@ -122,6 +134,16 @@ export default function Dashboard() {
     setDeleteModal(false);
     setSelectedAura(null);
     setDeleteError(null);
+  };
+
+  const openDetailModal = (aura) => {
+    setDetailAura(aura);
+    setDetailModal(true);
+  };
+  
+  const closeDetailModal = () => {
+    setDetailModal(false);
+    setDetailAura(null);
   };
 
   if (status === "loading") {
@@ -189,13 +211,13 @@ export default function Dashboard() {
                 className="group bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/10"
               >
                 <div
-                  className={`h-2 ${aura.color?.startsWith("from-") ? "bg-purple-500" : aura.color}`}
+                  className={`h-2 ${getGradientClass(aura.color)}`}
                 ></div>
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-bold group-hover:text-purple-400 transition-colors">{aura.message}</h3>
                     <div
-                      className={`w-10 h-10 rounded-full flex-shrink-0 ${aura.color?.startsWith("from-") ? "bg-purple-500" : aura.color} flex items-center justify-center text-white text-xs shadow-md`}
+                      className={`w-10 h-10 rounded-full flex-shrink-0 ${getGradientClass(aura.color)} flex items-center justify-center text-white text-xs shadow-md`}
                     >
                       {aura.sentimentRatio > 0 ? '+'+(aura.sentimentRatio).toFixed(1) : (aura.sentimentRatio).toFixed(1)}
                     </div>
@@ -213,7 +235,7 @@ export default function Dashboard() {
                           .map((keyword, index) => (
                             <span
                               key={index}
-                              className={`px-2 py-1 rounded-full text-xs ${aura.color?.startsWith("from-") ? "bg-purple-500" : aura.color} bg-opacity-20 text-white`}
+                              className={`px-2 py-1 rounded-full text-xs ${getGradientClass(aura.color)} bg-opacity-20 text-white`}
                             >
                               {keyword}
                             </span>
@@ -233,7 +255,10 @@ export default function Dashboard() {
                     </div>
                     
                     <div className="flex items-center gap-2">
-                      <button className="text-purple-400 hover:text-purple-300 text-sm flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button 
+                        onClick={() => openDetailModal(aura)}
+                        className="text-purple-400 hover:text-purple-300 text-sm flex items-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
                         Detaylı Gör
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -264,6 +289,193 @@ export default function Dashboard() {
             >
               Yeni Aura Oluştur
             </Link>
+          </div>
+        )}
+
+        {/* Aura Detay Modalı */}
+        {detailModal && detailAura && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
+            <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-xl border border-purple-500/30 max-w-3xl w-full max-h-[80vh] mx-auto backdrop-blur-sm shadow-xl flex flex-col">
+              {/* Modal kapatma butonu */}
+              <button 
+                onClick={closeDetailModal}
+                className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              
+              {/* Header - Aura türü ve skor - sabit kalacak */}
+              <div className={`p-6 rounded-t-xl ${getGradientClass(detailAura.color)} sticky top-0 z-[5]`}>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">{detailAura.message}</h2>
+                  <div className="bg-white/20 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center text-white text-lg font-bold">
+                    {detailAura.sentimentRatio > 0 ? 
+                      '+' + (detailAura.sentimentRatio).toFixed(1) : 
+                      (detailAura.sentimentRatio).toFixed(1)
+                    }
+                  </div>
+                </div>
+              </div>
+              
+              {/* Kaydırılabilir içerik bölümü */}
+              <div className="flex-1 overflow-y-auto custom-scrollbar">
+                {/* Aura içeriği */}
+                <div className="p-6">
+                  {/* Aura görsel */}
+                  {detailAura.image && (
+                    <div className="mb-6">
+                      <Image 
+                        src={detailAura.image} 
+                        alt={`${detailAura.message} Aura`} 
+                        width={600}
+                        height={300}
+                        className="rounded-lg shadow-lg object-contain max-h-[300px] w-full"
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Duygusal analiz puanı */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white/90 mb-3">Duygusal Analiz</h3>
+                    <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-red-400">Negatif</span>
+                        <span className="text-green-400">Pozitif</span>
+                      </div>
+                      <div className="h-4 bg-white/10 rounded-full overflow-hidden relative">
+                        <div 
+                          className={`absolute top-0 bottom-0 left-1/2 ${
+                            detailAura.sentimentRatio > 0 ? 'bg-green-500' : 'bg-red-500'
+                          }`}
+                          style={{ 
+                            width: `${Math.abs(detailAura.sentimentRatio) * 50}%`,
+                            left: detailAura.sentimentRatio >= 0 ? '50%' : `${50 - Math.abs(detailAura.sentimentRatio) * 50}%`
+                          }}
+                        ></div>
+                        <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-white/40"></div>
+                      </div>
+                      <div className="mt-2 text-center">
+                        <span className={`font-bold ${
+                          detailAura.sentimentRatio > 0.5 ? 'text-green-400' : 
+                          detailAura.sentimentRatio < -0.5 ? 'text-red-400' : 'text-white/80'
+                        }`}>
+                          {detailAura.sentimentRatio > 0.5 ? 'Oldukça Pozitif' : 
+                          detailAura.sentimentRatio > 0.2 ? 'Pozitif' :
+                          detailAura.sentimentRatio < -0.5 ? 'Oldukça Negatif' :
+                          detailAura.sentimentRatio < -0.2 ? 'Negatif' : 'Nötr'}
+                        </span>
+                        <p className="text-xs text-white/60 mt-1">
+                          Duygu skoru: {detailAura.sentimentRatio > 0 ? '+' : ''}{detailAura.sentimentRatio.toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Açıklama */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white/90 mb-2">Aura Açıklaması</h3>
+                    <p className="text-white/80">{detailAura.description}</p>
+                  </div>
+                  
+                  {/* Girilen metin */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white/90 mb-2">Aura Girdisi</h3>
+                    <div className="bg-white/5 border border-white/10 rounded-lg p-4 max-h-40 overflow-y-auto custom-scrollbar">
+                      <p className="text-white/70 whitespace-pre-wrap">{detailAura.text}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Anahtar kelimeler */}
+                  {detailAura.detectedKeywords?.length > 0 && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white/90 mb-2">Anahtar Kelimeler</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {detailAura.detectedKeywords.map((keyword, index) => (
+                          <span
+                            key={index}
+                            className={`px-3 py-1.5 rounded-full text-sm ${getGradientClass(detailAura.color)} bg-opacity-20 text-white/90`}
+                          >
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Tarih bilgisi */}
+                  <div className="text-sm text-white/50 border-t border-white/10 pt-4 mt-4 flex justify-between">
+                    <span>Oluşturulma: {formatDate(detailAura.createdAt)}</span>
+                    <span className="text-xs">ID: {detailAura.id}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Footer - İşlemler - sabit kalacak */}
+              <div className="p-6 border-t border-white/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-gray-900/80 sticky bottom-0 z-[5]">
+                <div className="flex flex-wrap gap-3">
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}\n\nAurascend uygulaması ile yaratıldı.`);
+                      alert('Aura sonucu panoya kopyalandı!');
+                    }}
+                    className="text-white/80 hover:text-white flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    Kopyala
+                  </button>
+                  
+                  <a 
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}\n\nAurascend uygulaması ile yaratıldı.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
+                    </svg>
+                    Twitter
+                  </a>
+                  
+                  <a 
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(`Aura Sonucum: ${detailAura.message}\n${detailAura.description}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-sm"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.9 2H3.1A1.1 1.1 0 0 0 2 3.1v17.8A1.1 1.1 0 0 0 3.1 22h9.58v-7.75h-2.6v-3h2.6V9a3.64 3.64 0 0 1 3.88-4 20.26 20.26 0 0 1 2.33.12v2.7H17.3c-1.26 0-1.5.6-1.5 1.47v1.93h3l-.39 3H15.8V22h5.1a1.1 1.1 0 0 0 1.1-1.1V3.1A1.1 1.1 0 0 0 20.9 2Z" />
+                    </svg>
+                    Facebook
+                  </a>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={() => {
+                      closeDetailModal();
+                      openDeleteModal(detailAura);
+                    }}
+                    className="text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Bu Aurayı Sil
+                  </button>
+                  
+                  <button
+                    onClick={closeDetailModal}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+                  >
+                    Kapat
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
