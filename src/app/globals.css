@@ -24,7 +24,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Animations */
+/* Enhanced Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -33,6 +33,17 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -66,8 +77,52 @@ body {
   }
 }
 
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes colorPulse {
+  0%, 100% {
+    filter: saturate(100%);
+  }
+  50% {
+    filter: saturate(150%);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+  }
+}
+
+@keyframes rotateAura {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation Classes */
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.5s ease-out forwards;
 }
 
 .animate-pulse {
@@ -78,10 +133,90 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-gradient-flow {
+  background-size: 200% 200%;
+  animation: gradientFlow 8s ease infinite;
+}
+
+.animate-color-pulse {
+  animation: colorPulse 4s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotateAura 30s linear infinite;
+}
+
 .shimmer {
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite linear;
+}
+
+/* Enhanced UI Elements */
+.aura-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.aura-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.aura-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(139, 92, 246, 0) 0%, rgba(139, 92, 246, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.aura-card:hover::after {
+  opacity: 1;
+}
+
+.aura-image-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.aura-image {
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.aura-image-container:hover .aura-image {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.hover-scale-102 {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale-102:hover {
+  transform: scale(1.02);
+}
+
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(45deg, var(--primary), var(--secondary));
 }
 
 /* Custom scrollbar */

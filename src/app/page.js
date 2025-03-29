@@ -16,7 +16,6 @@ export default function Home() {
   const [auraResult, setAuraResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [detectedKeywords, setDetectedKeywords] = useState([]);
-  const [showDetails, setShowDetails] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -24,12 +23,12 @@ export default function Home() {
   const [animateTitle, setAnimateTitle] = useState(false);
   
   // Aura analiz bölümüne scroll yapmak için ref
-  const auraAnalysisRef = useRef(null);
+  const analyzeRef = useRef(null);
   
   // Scroll to aura analysis section
   const scrollToAnalysis = () => {
-    if (auraAnalysisRef && auraAnalysisRef.current) {
-      auraAnalysisRef.current.scrollIntoView({ behavior: "smooth" });
+    if (analyzeRef && analyzeRef.current) {
+      analyzeRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
   
@@ -48,15 +47,17 @@ export default function Home() {
   const analyzeText = async () => {
     if (!session) return;
     
+    // Scroll to analysis section
+    scrollToAnalysis();
+    
     // Start analysis animation
     setIsAnalyzing(true);
     setAuraResult(null);
     setDetectedKeywords([]);
-    setShowDetails(false);
     setSaveError(null);
     setIsSaving(false);
     
-    // Simulate processing time for better UX
+    // Simulate processing time for better UX with visual feedback
     setTimeout(async () => {
       try {
         // Use our utility function to analyze the text
@@ -178,7 +179,7 @@ export default function Home() {
         setIsAnalyzing(false);
         setIsSaving(false);
       }
-    }, 1500);
+    }, 2200); // Slightly longer timeout for better animation experience
   };
   
   // Features bölümü için içerik
@@ -271,6 +272,7 @@ export default function Home() {
                     >
                       Auranı Analiz Et
                     </button>
+                    
                     <Link 
                       href="/dashboard" 
                       className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
@@ -308,136 +310,133 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Aura Analiz Bölümü */}
+      {/* Analyze Section */}
       {status === 'authenticated' && (
-        <section ref={auraAnalysisRef} className="py-16 bg-black/50 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
-                <span className="text-purple-400">Auranı</span> Analiz Et
+        <section ref={analyzeRef} className="w-full py-20 bg-gradient-to-br from-black via-purple-950 to-black px-4">
+          <div className="container mx-auto max-w-4xl">
+            <div className="bg-black/40 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/5">
+              <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-10">
+                Auranı <span className="text-purple-400">Analiz Et</span>
               </h2>
               
-              <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6 sm:p-8 shadow-2xl border border-white/10">
-                <p className="text-white/80 mb-6">
-                  Kendini nasıl hissettiğini, düşüncelerini veya içsel durumunu anlatan bir metin yaz. 
-                  Aurascend, enerjini analiz edip sana özel bir aura oluşturacak.
-                </p>
-                
-                <textarea
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  placeholder="Kendini tanımla, duygularını anlat, içsel dünyandan bahset..."
-                  className="w-full h-48 p-4 rounded-lg bg-white/90 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 mb-6 resize-none"
-                ></textarea>
-                
-                <button
-                  onClick={analyzeText}
-                  disabled={isAnalyzing || text.trim().length < 3}
-                  className={`w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-lg transition-all ${isAnalyzing || text.trim().length < 3 ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {isAnalyzing ? (
-                    <span className="flex items-center justify-center">
-                      <Spinner size="small" className="mr-3" />
-                      Auran Analiz Ediliyor...
-                    </span>
-                  ) : (
-                    'Auramı Analiz Et'
-                  )}
-                </button>
-              </div>
-              
-              {auraResult && (
-                <div className="mt-10 rounded-xl overflow-hidden shadow-xl mx-auto">
-                  <div className={`p-8 bg-gradient-to-r ${auraResult.color}`}>
-                    {auraResult.image && (
-                      <div className="mb-6 flex justify-center">
-                        <Image 
-                          src={auraResult.image} 
-                          alt={`${auraResult.message} Aura`} 
-                          width={500}
-                          height={300}
-                          className="rounded-lg shadow-lg max-h-[300px] object-cover" 
-                          priority
-                          loading="eager"
-                          quality={90}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0ZXh0AAAAAElYAABYWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC08MTY3LjIyOUFTRjo/Tj4yMkhiS0hHSUZJTU1QUFBQUFBQUFBQUFD/2wBDAR0XFyAeIBogHh4gIiAoJCAoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAb/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                        />
-                      </div>
-                    )}
-                    
-                    {auraResult.music && (
-                      <div className="mb-6">
-                        <AuraPlayer musicFile={auraResult.music} />
-                      </div>
-                    )}
-                    
-                    <h3 className="text-3xl font-bold text-white mb-2">{auraResult.message}</h3>
-                    <p className="text-white/90 text-lg">{auraResult.description}</p>
+              <div className="mb-8">
+                <div className="relative">
+                  <textarea
+                    rows="6"
+                    placeholder="Şu an nasıl hissettiğini, düşündüğünü ve enerjini anlat..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    disabled={isAnalyzing}
+                    className="w-full bg-white/5 text-white placeholder-gray-400 border border-gray-800 rounded-xl p-4 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <div className="mt-4 flex justify-between gap-4">
+                    <div className="text-xs text-gray-500">
+                      {text.length}/500 karakter
+                    </div>
+                    <button
+                      onClick={isAnalyzing ? null : analyzeText}
+                      disabled={isAnalyzing || text.trim().length < 20}
+                      className={`px-6 py-2 rounded-lg font-medium ${
+                        isAnalyzing || text.trim().length < 20
+                          ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700'
+                      } transition-all`}
+                    >
+                      {isAnalyzing ? 'Analiz Ediliyor...' : 'Auramı Analiz Et'}
+                    </button>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-lg p-6 border-t border-white/10">
-                    <h4 className="text-xl font-semibold text-white mb-3">Aura Analizi</h4>
-                    <p className="text-white/80">
-                      Enerjin, düşüncelerin ve duyguların bu aurayı oluşturuyor. Bu analiz, içsel dünyanın bir yansıması ve potansiyelinin bir göstergesi.
-                    </p>
-                    
-                    {isSaving ? (
+                </div>
+                
+                {/* Analiz yükleniyor animasyonu */}
+                {isAnalyzing && (
+                  <div className="mt-6 p-8 rounded-lg bg-white dark:bg-gray-900 shadow-lg relative overflow-hidden animate-fadeIn">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20 animate-gradient-flow"></div>
+                    <div className="relative z-10">
                       <div className="flex flex-col items-center justify-center">
-                        <Spinner size="large" className="mb-2" />
-                        <p className="text-gray-500 animate-pulse">
-                          Sonuç kaydediliyor...
+                        <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 animate-pulse mb-6 relative">
+                          <div className="w-20 h-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-400 to-indigo-500 animate-spin"></div>
+                          </div>
+                        </div>
+                        
+                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 animate-shimmer text-center">
+                          Auranı Analiz Ediyorum
+                        </h3>
+                        
+                        <div className="space-y-2 w-full max-w-md">
+                          <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" style={{ animationDelay: "0.1s" }}></div>
+                          <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-5/6 mx-auto" style={{ animationDelay: "0.2s" }}></div>
+                          <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-4/6 mx-auto" style={{ animationDelay: "0.3s" }}></div>
+                        </div>
+                        
+                        <div className="mt-6 flex flex-wrap justify-center gap-2">
+                          {['🔮', '✨', '💫', '🌈', '⚡'].map((emoji, index) => (
+                            <span 
+                              key={index} 
+                              className="inline-block animate-float"
+                              style={{ 
+                                animationDelay: `${index * 0.2}s`,
+                                fontSize: "1.5rem"
+                              }}
+                            >
+                              {emoji}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <p className="text-gray-600 dark:text-gray-400 mt-4 text-center max-w-md">
+                          Enerji alanın analiz ediliyor ve aurandaki renkler ayırt ediliyor...
                         </p>
                       </div>
-                    ) : saveError && (
-                      <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded">
-                        <p className="font-bold">Uyarı</p>
-                        <p>Analiz başarılı fakat kayıt sırasında hata oluştu: {saveError}</p>
-                        <p className="text-sm mt-2">Lütfen daha sonra tekrar deneyin veya yöneticiyle iletişime geçin.</p>
-                      </div>
-                    )}
-                    
-                    {detectedKeywords.length > 0 && (
-                      <div className="mt-4">
-                        <button 
-                          onClick={() => setShowDetails(!showDetails)}
-                          className="text-purple-400 hover:text-purple-300 underline text-sm flex items-center"
-                        >
-                          {showDetails ? 'Detayları Gizle' : 'Analiz Detaylarını Göster'}
-                        </button>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Aura analizi sonucu gösterimi */}
+                {auraResult && !isAnalyzing && (
+                  <div className="mt-4 animate-fadeInScale">
+                    <div className={`p-1 rounded-lg bg-gradient-to-r ${auraResult.color || 'from-purple-500 to-blue-500'} animate-gradient-flow aura-card`}>
+                      <div className="bg-white dark:bg-gray-900 p-6 rounded-lg">
+                        <div className="flex justify-between items-center mb-4">
+                          <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 animate-shimmer">
+                            {auraResult.message || 'Aura Sonucu'}
+                          </h3>
+                        </div>
                         
-                        {showDetails && (
-                          <div className="mt-4 bg-black/20 p-4 rounded-lg">
-                            <h5 className="text-white font-medium mb-2">Tespit Edilen Anahtar Kelimeler:</h5>
-                            <div className="flex flex-wrap gap-2">
-                              {detectedKeywords.map((keyword, index) => (
-                                <span key={index} className="inline-block bg-white/10 text-white/80 px-2 py-1 rounded-full text-xs">
-                                  {keyword}
-                                </span>
-                              ))}
+                        {/* Aura görsel ve açıklama içeriği */}
+                        <div className="flex flex-col md:flex-row gap-6">
+                          {/* Aura görseli */}
+                          {auraResult.image && (
+                            <div className="w-full md:w-1/3 flex justify-center aura-image-container animate-glow-pulse">
+                              <img
+                                src={auraResult.image}
+                                alt={auraResult.message}
+                                className="rounded-lg shadow-lg max-w-full h-auto object-cover aura-image animate-float"
+                                style={{aspectRatio: "1/1", objectFit: "cover"}}
+                              />
+                              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                             </div>
+                          )}
+                          
+                          {/* Aura açıklaması */}
+                          <div className={`w-full ${auraResult.image ? 'md:w-2/3' : ''}`}>
+                            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed mb-4">
+                              {auraResult.description || 'Aura analizi tamamlandı.'}
+                            </p>
                             
-                            {auraResult.analyticData && (
-                              <div className="mt-4 text-white/70 text-xs">
-                                <p>Bu analiz, metindeki duygu tonları, kelime örüntüleri ve ifade bağlamları değerlendirilerek oluşturuldu.</p>
-                                <p className="mt-1">Pozitif/Negatif duygu oranı: {auraResult.analyticData.sentimentRatio}</p>
+                            {/* Müzik oynatıcı */}
+                            {auraResult.music && (
+                              <div className="mb-4">
+                                <AuraPlayer musicFile={auraResult.music} />
                               </div>
                             )}
                           </div>
-                        )}
+                        </div>
                       </div>
-                    )}
-                    
-                    <div className="mt-6 text-center">
-                      <Link 
-                        href="/dashboard"
-                        className="text-purple-400 hover:text-purple-300 transition-colors font-semibold"
-                      >
-                        Tüm Aura Sonuçlarımı Gör →
-                      </Link>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </section>
