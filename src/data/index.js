@@ -1032,7 +1032,7 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.zor_1) updatedOutputs.zor_1.image = "/images/auras/aura_huzursuz_zor1.png";
   if (updatedOutputs.zor_2) updatedOutputs.zor_2.image = "/images/auras/aura_sikismis_hisseden_zor2.png";
   if (updatedOutputs.zor_3) updatedOutputs.zor_3.image = "/images/auras/aura_yorgun_zor3.png";
-  if (updatedOutputs.zor_4) updatedOutputs.zor_4.image = "/images/auras/aura_varoluşsal_sorgulamada_zor4.png";
+  if (updatedOutputs.zor_4) updatedOutputs.zor_4.image = "/images/auras/aura_varoluşsal_sorgulamada_zor.png";
   if (updatedOutputs.guclu_1) updatedOutputs.guclu_1.image = "/images/auras/aura_kararli_guclu1.png";
   if (updatedOutputs.guclu_2) updatedOutputs.guclu_2.image = "/images/auras/aura_cesur_guclu2.png";
   if (updatedOutputs.guclu_3) updatedOutputs.guclu_3.image = "/images/auras/aura_dayanikli_guclu3.png";

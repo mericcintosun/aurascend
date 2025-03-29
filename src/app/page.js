@@ -10,6 +10,9 @@ import { Spinner } from '@/components/Spinner';
 import AuraPlayer from '../components/AuraPlayer';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
+// NOT: Client component'ler metadata export edemez
+// metadata için layout.js dosyasını kullanın
+
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -417,8 +420,9 @@ export default function Home() {
                     rows="6"
                     placeholder="Şu an nasıl hissettiğini, düşündüğünü ve enerjini anlat..."
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={(e) => setText(e.target.value.substring(0, 500))}
                     disabled={isAnalyzing}
+                    maxLength={500}
                     className="w-full bg-white/5 text-white placeholder-gray-400 border border-gray-800 rounded-xl p-4 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   />
                   <div className="mt-4 flex justify-between gap-4">
