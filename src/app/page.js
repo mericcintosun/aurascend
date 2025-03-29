@@ -269,6 +269,22 @@ export default function Home() {
               >
                 Aurascend ile duygularını, düşüncelerini ve içsel dünyandaki gizli potansiyeli çözümle. Ruhunun rengini keşfet.
               </motion.p>
+              <motion.p 
+                className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+              >
+                Senin Auran Sınırsız
+              </motion.p>
+              <motion.p 
+                className="text-sm text-gray-300 mb-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+              >
+                Lenovo Yapay Zeka Maratonu projesidir.
+              </motion.p>
               <div className="flex flex-col sm:flex-row gap-4">
                 {status === 'authenticated' ? (
                   <>
@@ -378,7 +394,7 @@ export default function Home() {
           ref={analyzeRef} 
           className="w-full py-20 bg-gradient-to-br from-black via-purple-950 to-black px-4"
           animate={{
-            opacity: isAnalyzeVisible ? 1 : 0.5,
+            opacity: isAnalyzeVisible ? 1 : 1,
             y: isAnalyzeVisible ? 0 : 50
           }}
           transition={{ duration: 0.7 }}
@@ -538,7 +554,7 @@ export default function Home() {
         ref={howItWorksRef}
         className="py-20 bg-gradient-to-b from-black/50 to-blue-900/30 backdrop-blur-sm"
         animate={{
-          opacity: isHowItWorksVisible ? 1 : 0.5,
+          opacity: isHowItWorksVisible ? 1 : 1,
           y: isHowItWorksVisible ? 0 : 50
         }}
         transition={{ duration: 0.7 }}
@@ -626,7 +642,7 @@ export default function Home() {
         ref={featuresRef}
         className="py-20 bg-black/50 backdrop-blur-sm"
         animate={{
-          opacity: isFeaturesVisible ? 1 : 0.5,
+          opacity: isFeaturesVisible ? 1 : 1,
           y: isFeaturesVisible ? 0 : 50
         }}
         transition={{ duration: 0.7 }}
@@ -672,7 +688,7 @@ export default function Home() {
         ref={ctaRef}
         className="py-20 bg-gradient-to-b from-blue-900/30 to-purple-900/50 backdrop-blur-sm"
         animate={{
-          opacity: isCtaVisible ? 1 : 0.5,
+          opacity: isCtaVisible ? 1 : 1,
           y: isCtaVisible ? 0 : 50
         }}
         transition={{ duration: 0.7 }}
