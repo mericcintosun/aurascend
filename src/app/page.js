@@ -407,6 +407,7 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.section>
+
       
       {/* Analyze Section */}
       {status === 'authenticated' && (

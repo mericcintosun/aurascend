@@ -107,6 +107,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             <NavLink href="/">Ana Sayfa</NavLink>
             <NavLink href="/features">Özellikler</NavLink>
+            <NavLink href="/prompts">Promptlar</NavLink>
 
             {/* Auth Buttons */}
             {status === "authenticated" ? (
@@ -254,6 +255,12 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Özellikler
+              </MobileNavLink>
+              <MobileNavLink
+                href="/prompts"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Promptlar
               </MobileNavLink>
 
               {/* Auth Buttons */}
