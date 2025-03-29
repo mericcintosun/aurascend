@@ -536,32 +536,7 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Testimonials */}
-      <section className="py-20 bg-black/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-16">
-            Kullanıcı <span className="text-purple-400">Deneyimleri</span>
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index} 
-                className="bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10 hover:border-purple-500/50 transition-all"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mr-4"></div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white">{testimonial.name}</h4>
-                    <p className="text-purple-400">{testimonial.role}</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 italic">&ldquo;{testimonial.comment}&rdquo;</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    
       
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-blue-900/30 to-purple-900/50 backdrop-blur-sm">

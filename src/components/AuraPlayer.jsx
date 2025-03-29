@@ -59,7 +59,6 @@ const AuraPlayer = ({ musicFile }) => {
           </button>
           <div>
             <p className="text-sm font-medium">Auranın Müziği</p>
-            <p className="text-xs opacity-70">10 saniye</p>
           </div>
         </div>
         

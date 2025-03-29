@@ -198,21 +198,18 @@ export const auraData = {
     karmasik_1: {
       message: "Nostalji",
       color: "from-amber-500 to-amber-700",
-      image: "/images/auras/aura_merak_dolu_karmasik1.png",
       description:
         "Nostaljik auran, seni geçmişin tatlı bir melankolisine bağlar. Anılarla ve eski hatıralarla kurduğun güçlü bağ, aynı zamanda bugünü daha anlamlı kılmana yardımcı olur. Her baktığında, eski günlerin özlemini duyarken, oradaki güzellikleri ve dersleri de zihninde canlı tutarsın.\n\nGeçmişe duyduğun bu özlem, seni romantik ve duygusal bir ruh haline sokar. Müziklerden fotoğraflara, eski defter notlarından çocukluk arkadaşlıklarına kadar, hatıralarını büyük bir şefkatle kucaklamayı seversin. Bu sayede, içindeki sevgiye hep taze bir kaynak bulursun.\n\nNostalji duygusu, bazen geçmişe saplanıp kalmanı da beraberinde getirebilir. Gözünde canlanan anılar, bugünün realitesinden kopmana veya pişmanlıklara takılıp kalmana neden olabilir. Bunun farkına varmak ve anıları daha dengeli biçimde kucaklamak, seni özgürleştirir.\n\nUnutma ki geçmiş, geleceği şekillendirirken elinde tutabileceğin güçlü bir tecrübe hazinesidir. Nostaljik ruhun, hayatını estetik, anlam ve duygu yönünden zenginleştirir. Geçmiş deneyimlerini içtenlikle değerlendirip şu ana entegre ettiğinde, hem köklerinle bağlantını korur hem de ilerlemeye devam edersin.",
     },
     karmasik_2: {
       message: "Tutku",
       color: "from-pink-500 to-red-600",
-      image: "/images/auras/aura_tutkulu_karmasik3.png",
       description:
         "Tutku dolu ruhun, içindeki yaratıcı gücü ve azmi sürekli besliyor. Bu enerji sayesinde karşılaştığın engellere rağmen yoluna devam ediyor ve hayallerinin peşinden koşuyorsun. Tutkun, diğer insanların da yüreğinde bir alev yakabilir.\n\nBu güçlü duygu, seni hayatın her alanında motive eder. İster bir sanat projesi, ister mesleki bir hedef olsun, kendini adadığında ortaya çıkan sonuçlar insanların üzerinde derin bir etki bırakır. Çünkü emeğini ve yüreğini tam anlamıyla ortaya koyarsın.\n\nTutku, bazen gözü kara davranmana veya aşırı duygusallığa kapılmana da yol açabilir. Duygularının yoğunluğu, objektif düşünmeyi zorlaştırabilir. Ancak deneyim kazandıkça enerjini nasıl yöneteceğini daha iyi öğrenir, tutkunun seni tüketmesine izin vermezsin.\n\nTıpkı ateşin çevresine hem ısı hem de ışık saçması gibi, sen de etrafına canlılık ve ilham verirsin. İçindeki bu kıvılcım, hayatta durduğun yeri güçlendirirken seni sürekli yeniliklere ve öğrenmeye davet eder. Kendi yolunda ilerlerken, başkalarının da cesaretle adım atmasını sağlayabilirsin.",
     },
     karmasik_3: {
       message: "Merak",
       color: "from-violet-400 to-purple-600",
-      image: "/images/auras/aura_merak_dolu_karmasik1.png",
       description:
         "Merakın, seni sürekli soru sormaya ve yeni şeyler öğrenmeye iten tükenmez bir güç kaynağıdır. Bilinmeyeni keşfetmek, senin için büyük bir macera anlamına gelir. Bu açık fikirli tutumun, hayatına hem heyecan hem de dinamizm katar.\n\nDünyayı anlamaya çalışırken, küçük detayları dahi gözden kaçırmazsın. Basit bir çiçeğin yaprak dokusundan karmaşık bilimsel teorilere kadar geniş bir yelpazede ilgi alanların olabilir. Bu, seni özgün ve renkli bir kişiliğe dönüştürür.\n\nMerakın, yaşadığın ortamda daima öğrenme ve gelişme tohumları eker. Senin coşkun ve keşif isteğin, etrafındakilere de örnek olur ve onları da araştırmaya, denemeye teşvik eder. Böylece kolektif olarak ilerlemeye katkıda bulunmuş olursun.\n\nBazen aynı anda birden fazla konuya ilgi duyar, dikkatini dağıtabilirsin. Burada önemli olan, önceliklerini belirleyip merakını faydalı kanallara yönlendirmektir. Bu şekilde hem odaklı çalışır hem de bitmek bilmeyen merakınla yeni keşiflere yelken açmanın keyfini çıkarırsın.",
     },

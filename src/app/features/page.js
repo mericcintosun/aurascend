@@ -145,37 +145,7 @@ const FeaturePage = () => {
                 ))}
               </div>
 
-              <div className="mt-12 p-6 bg-indigo-900/40 rounded-xl border border-indigo-800/50">
-                <h3 className="text-2xl font-bold mb-4">Renk Gradyanları Nasıl Çalışır?</h3>
-                <p className="mb-4">
-                  Aurascend, metin analizinden elde ettiği duygusal sonuçları renk gradyanlarına dönüştürür. 
-                  Bu gradyanlar, TailwindCSS&apos;in sunduğu renk sınıfları kullanılarak oluşturulur.
-                </p>
-                <div className="bg-blue-950/80 p-4 rounded-lg mb-6">
-                  <pre className="text-sm overflow-x-auto whitespace-pre-wrap">
-                    <code>
-                      {`// Aura renginin oluşturulması\n"from-yellow-300 to-orange-400" // Mutluluk için sarı-turuncu gradyan`}
-                    </code>
-                  </pre>
-                </div>
-                <p>
-                  Her duygusal durum için önceden tanımlanmış gradyanlar kullanılır. Örneğin:
-                </p>
-                <ul className="list-disc list-inside space-y-2 mt-4 pl-4">
-                  <li>
-                    <span className="font-medium">Pozitif duygular:</span> Sarı, turuncu, açık mavi ve yeşil tonları
-                  </li>
-                  <li>
-                    <span className="font-medium">Negatif duygular:</span> Koyu mavi, kırmızı ve gri tonları 
-                  </li>
-                  <li>
-                    <span className="font-medium">Durağan duygular:</span> Turkuaz, mavi ve mor tonları
-                  </li>
-                  <li>
-                    <span className="font-medium">Karmaşık duygular:</span> Mor, amber ve farklı renk kombinasyonları
-                  </li>
-                </ul>
-              </div>
+              
             </div>
           )}
 

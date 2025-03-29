@@ -367,11 +367,8 @@ const deepContextAnalysis = (text) => {
       mainPattern.includes("hüzün")
     ) {
       dominantGroup = "pozitif_1"; // Neşeli
-    } else if (
-      mainPattern.includes("stres") ||
-      mainPattern.includes("gergin")
-    ) {
-      dominantGroup = "pozitif_2"; // Huzurlu
+    } else if (pattern.includes("stres") || pattern.includes("yorgun")) {
+      dominantGroup = "pozitif_2"; // Stres yoksa -> Huzurlu
     } else if (mainPattern.includes("öfke") || mainPattern.includes("kızgın")) {
       dominantGroup = "denge_2"; // Barışçıl
     } else if (mainPattern.includes("acı") || mainPattern.includes("keder")) {
@@ -1020,9 +1017,12 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.negatif_4) updatedOutputs.negatif_4.image = "/images/auras/aura_utanc_suphe_negatif4.png";
   if (updatedOutputs.duragan_1) updatedOutputs.duragan_1.image = "/images/auras/aura_sakin_duragan1.png";
   if (updatedOutputs.duragan_2) updatedOutputs.duragan_2.image = "/images/auras/aura_derin_dusunen_duragan2.png";
-  if (updatedOutputs.karmasik_1) updatedOutputs.karmasik_1.image = "/images/auras/aura_merak_dolu_karmasik1.png";
-  if (updatedOutputs.karmasik_2) updatedOutputs.karmasik_2.image = "/images/auras/aura_karmasik_duygular_karmasik2.png";
+  
+  // Karmaşık aura görsellerini güncelle
+  if (updatedOutputs.karmasik_1) updatedOutputs.karmasik_1.image = "/images/auras/aura_tutkulu_karmasik3.png";
+  if (updatedOutputs.karmasik_2) updatedOutputs.karmasik_2.image = "/images/auras/aura_tutkulu_karmasik3.png";
   if (updatedOutputs.karmasik_3) updatedOutputs.karmasik_3.image = "/images/auras/aura_tutkulu_karmasik3.png";
+  
   if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.image = "/images/auras/aura_sevgi_dolu_sosyal1.png";
   if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.image = "/images/auras/aura_minnettar_sosyal2.png";
   if (updatedOutputs.sosyal_3) updatedOutputs.sosyal_3.image = "/images/auras/aura_guven_veren_sosyal3.png";
@@ -1065,7 +1065,7 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.meta_1) updatedOutputs.meta_1.image = "/images/auras/aura_isiltili_meta1.jpeg";
   if (updatedOutputs.ust_4) updatedOutputs.ust_4.image = "/images/auras/aura_evrensel_ust4.jpeg";
   if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.image = "/images/auras/aura_belirsiz_belirsiz1.jpeg";
-  if (updatedOutputs.default) updatedOutputs.default.image = "/images/auras/aura_cok_boyutlu_default.jpeg";
+  if (updatedOutputs.default) updatedOutputs.default.image = "/images/auras/aura_tutkulu_karmasik3.png";
   
   // Aura müziklerini ata
   if (updatedOutputs.pozitif_1) updatedOutputs.pozitif_1.music = "/playlist/music1.mp3";
@@ -1083,9 +1083,12 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.negatif_4) updatedOutputs.negatif_4.music = "/playlist/music13.mp3";
   if (updatedOutputs.duragan_1) updatedOutputs.duragan_1.music = "/playlist/music14.mp3";
   if (updatedOutputs.duragan_2) updatedOutputs.duragan_2.music = "/playlist/music15.mp3";
+  
+  // Karmaşık aura müziklerini güncelle
   if (updatedOutputs.karmasik_1) updatedOutputs.karmasik_1.music = "/playlist/music16.mp3";
   if (updatedOutputs.karmasik_2) updatedOutputs.karmasik_2.music = "/playlist/music17.mp3";
   if (updatedOutputs.karmasik_3) updatedOutputs.karmasik_3.music = "/playlist/music18.mp3";
+  
   if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.music = "/playlist/music19.mp3";
   if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.music = "/playlist/music20.mp3";
   if (updatedOutputs.sosyal_3) updatedOutputs.sosyal_3.music = "/playlist/music21.mp3";
@@ -1128,7 +1131,13 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.meta_1) updatedOutputs.meta_1.music = "/playlist/music58.mp3";
   if (updatedOutputs.ust_4) updatedOutputs.ust_4.music = "/playlist/music59.mp3";
   if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.music = "/playlist/music60.mp3";
-  if (updatedOutputs.default) updatedOutputs.default.music = "/playlist/music61.mp3";
+  if (updatedOutputs.default) updatedOutputs.default.music = "/playlist/music17.mp3";
+  
+  // Genel karmaşık aura için özel olarak müzik ve görsel ata
+  if (updatedOutputs.karmasik_genel) {
+    updatedOutputs.karmasik_genel.image = "/images/auras/aura_tutkulu_karmasik3.png";
+    updatedOutputs.karmasik_genel.music = "/playlist/music17.mp3";
+  }
   
   // Ek aura tipleri için müzik atamaları
   if (updatedOutputs.mizah_1) updatedOutputs.mizah_1.music = "/playlist/music1.mp3"; // Neşeli ile aynı müzik
@@ -1546,6 +1555,8 @@ export const analyzeAuraFromText = (text) => {
       output: {
         message: "Karmaşık",
         color: "from-purple-600 to-indigo-800",
+        image: "/images/auras/aura_tutkulu_karmasik3.png",
+        music: "/playlist/music17.mp3",
         description:
           "İçinde birçok farklı duyguyu aynı anda yaşadığın bir aura taşıyorsun. Bu, hayatın farklı yönlerini derinden algılama ve zengin bir iç dünyaya sahip olma becerini yansıtıyor. Zaman zaman çelişkili gelen düşünceler, aslında derinlikli bakış açını daha da keskinleştiriyor.\n\nKarmaşık duygular, sana hem kendini hem de başkalarını daha iyi anlama potansiyeli sunar. Katmanlı hislerin sayesinde, empati kurma ve duygusal bağlar geliştirme konusunda doğal bir yatkınlığın vardır. Bu yapın, seni ilham verici bir yol göstericiye dönüştürebilir.\n\nÖte yandan, bu duygusal çeşitlilik bazen seni yorabilir. Zihnin ve kalbin arasında gidip gelen düşünceler, kararsızlık veya içsel çatışmalar doğurabilir. Ancak unutma ki, bu çelişkiler aynı zamanda zenginliğinin de bir parçası. Kendi içsel dengen için zaman zaman durup duygularını gözlemlemek, sana büyük fayda sağlayacaktır.\n\nSon olarak, bu karmaşık yapı senin çok yönlülüğünü destekler. Hem entelektüel hem de duygusal açıdan zengin bir ifade alanı bulabilirsin. Yazı, sanat, müzik veya sosyal projeler gibi yaratıcı uğraşlar, içindeki değişken duyguları yapıcı bir enerjiye dönüştürerek kendini ve çevreni daha derinden dönüştürme şansı sunar.",
       },
