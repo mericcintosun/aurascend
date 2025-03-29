@@ -6,8 +6,8 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "AuraScend - İçsel Enerjini Keşfet",
-  description: "AuraScend ile içsel dünyanı keşfet, enerjini analiz et ve kendini daha iyi tanı.",
+  title: "Aurascend - İçsel Enerjini Keşfet",
+  description: "Aurascend ile içsel dünyanı keşfet, enerjini analiz et ve kendini daha iyi tanı.",
 };
 
 export default function RootLayout({ children }) {

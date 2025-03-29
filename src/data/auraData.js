@@ -1,4 +1,4 @@
-// AuraScend Mock Data - Keywords and Output Groups
+// Aurascend Mock Data - Keywords and Output Groups
 export const auraData = {
   keywords: [
     {

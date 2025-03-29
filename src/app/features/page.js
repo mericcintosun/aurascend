@@ -61,7 +61,7 @@ const FeaturePage = () => {
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-            AuraScend Özellikleri
+            Aurascend Özellikleri
           </h1>
           <p className="text-xl max-w-3xl mx-auto text-blue-100">
             Duygusal dünyayı keşfetmenin ve içsel yolculuğunuzu görselleştirmenin teknolojisi
@@ -120,9 +120,9 @@ const FeaturePage = () => {
                 Aura Renkleri ve Anlamları
               </h2>
               <p className="mb-6 text-lg">
-                AuraScend, duygusal durumunuza göre farklı renk kombinasyonlarında auralar oluşturur. 
+                Aurascend, duygusal durumunuza göre farklı renk kombinasyonlarında auralar oluşturur. 
                 Her renk gradyanı, belirli bir duygusal durumu ve enerjiyi temsil eder. 
-                İşte AuraScend&apos;in kullandığı temel aura renkleri ve anlamları:
+                İşte Aurascend&apos;in kullandığı temel aura renkleri ve anlamları:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -148,7 +148,7 @@ const FeaturePage = () => {
               <div className="mt-12 p-6 bg-indigo-900/40 rounded-xl border border-indigo-800/50">
                 <h3 className="text-2xl font-bold mb-4">Renk Gradyanları Nasıl Çalışır?</h3>
                 <p className="mb-4">
-                  AuraScend, metin analizinden elde ettiği duygusal sonuçları renk gradyanlarına dönüştürür. 
+                  Aurascend, metin analizinden elde ettiği duygusal sonuçları renk gradyanlarına dönüştürür. 
                   Bu gradyanlar, TailwindCSS&apos;in sunduğu renk sınıfları kullanılarak oluşturulur.
                 </p>
                 <div className="bg-blue-950/80 p-4 rounded-lg mb-6">
@@ -185,7 +185,7 @@ const FeaturePage = () => {
                 Duygu Analizi Teknolojisi
               </h2>
               <p className="mb-8 text-lg">
-                AuraScend&apos;in duygu analizi sistemi, metinlerinizi derinlemesine inceleyerek duygusal durumunuzu tespit eder.
+                Aurascend&apos;in duygu analizi sistemi, metinlerinizi derinlemesine inceleyerek duygusal durumunuzu tespit eder.
                 Tam olarak nasıl çalıştığını keşfedin:
               </p>
 
@@ -258,7 +258,7 @@ const FeaturePage = () => {
                     Bağlamsal Analiz
                   </h3>
                   <p className="mb-4">
-                    AuraScend, kelimelerin birbirleriyle olan ilişkilerini inceleyerek bağlamsal analiz yapar. 
+                    Aurascend, kelimelerin birbirleriyle olan ilişkilerini inceleyerek bağlamsal analiz yapar. 
                     Örneğin, bir pozitif kelime yakınında bir olumsuzlama ifadesi varsa, bu anlam tersine çevrilebilir.
                   </p>
                   <div className="bg-blue-950/80 p-4 rounded-lg mb-4">
@@ -287,7 +287,7 @@ const FeaturePage = () => {
                 Aura Tespit Sistemi
               </h2>
               <p className="mb-8 text-lg">
-                AuraScend&apos;in sofistike tespit sistemi, duygu analizinden elde edilen sonuçları aura tipine dönüştürür.
+                Aurascend&apos;in sofistike tespit sistemi, duygu analizinden elde edilen sonuçları aura tipine dönüştürür.
                 Bu süreç tamamen kişiselleştirilmiş ve her metne özgü sonuçlar üretir.
               </p>
 
@@ -336,7 +336,7 @@ const FeaturePage = () => {
                 <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
                   <h3 className="text-2xl font-bold mb-4">Çıktı Yapısı</h3>
                   <p className="mb-4">
-                    AuraScend analiz sonucunda şu bilgileri içeren kapsamlı bir aura çıktısı oluşturur:
+                    Aurascend analiz sonucunda şu bilgileri içeren kapsamlı bir aura çıktısı oluşturur:
                   </p>
                   <div className="bg-blue-950/80 p-4 rounded-lg mb-6">
                     <pre className="text-sm overflow-x-auto">
@@ -363,7 +363,7 @@ const FeaturePage = () => {
                 <div className="bg-indigo-900/40 rounded-xl p-6 border border-indigo-800/50">
                   <h3 className="text-2xl font-bold mb-4">Özel Durumlar</h3>
                   <p className="mb-4">
-                    AuraScend&apos;in tespit sistemi, bazı özel durumlara karşı duyarlıdır:
+                    Aurascend&apos;in tespit sistemi, bazı özel durumlara karşı duyarlıdır:
                   </p>
                   <ul className="list-disc list-inside space-y-3 pl-4">
                     <li>
@@ -393,7 +393,7 @@ const FeaturePage = () => {
                 Kullanılan Yapay Zeka Teknolojileri
               </h2>
               <p className="mb-8 text-lg">
-                AuraScend, en gelişmiş yapay zeka teknolojilerini kullanarak oluşturulmuştur. 
+                Aurascend, en gelişmiş yapay zeka teknolojilerini kullanarak oluşturulmuştur. 
                 Size en iyi deneyimi sunabilmek için farklı alanlarda uzmanlaşmış AI modellerinden yararlanıyoruz.
               </p>
 
@@ -449,7 +449,7 @@ const FeaturePage = () => {
                       <h4 className="text-xl font-medium text-white mb-3">GPT (4.5)</h4>
                       <p className="text-gray-300">
                         GPT 4.5 modeli, karmaşık duygu analizleri ve dilbilimsel örüntülerin tespitinde kullanılıyor. 
-                        Bu model, Türkçe'ye özgü dilbilimsel yapıları anlama konusunda üstün başarı gösteriyor.
+                        Bu model, Türkçe&apos;ye özgü dilbilimsel yapıları anlama konusunda üstün başarı gösteriyor.
                       </p>
                     </div>
                   </div>
@@ -509,7 +509,7 @@ const FeaturePage = () => {
                     <div>
                       <h4 className="text-lg font-medium text-white mb-2">Entegrasyon ve Sinerji</h4>
                       <p className="text-gray-300 mb-4">
-                        AuraScend olarak, her alanda en uygun yapay zeka modellerini seçerek, entegrasyon ve 
+                        Aurascend olarak, her alanda en uygun yapay zeka modellerini seçerek, entegrasyon ve 
                         sinerji oluşturmayı hedefledik. Bu modeller birlikte çalışarak, duygu analizi konusunda 
                         çok daha kapsamlı ve hassas bir sistem oluşturuyor.
                       </p>

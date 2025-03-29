@@ -1,12 +1,12 @@
-# AuraScend - İçsel Enerjini Keşfet
+# Aurascend - İçsel Enerjini Keşfet
 
-AuraScend, kullanıcıların kendilerine özgü enerjilerini (aura) analiz edip; bu "aura"yı dijital sanata, hikâyelere ve sesli ifadelere dönüştüren interaktif bir web uygulamasıdır.
+Aurascend, kullanıcıların kendilerine özgü enerjilerini (aura) analiz edip; bu "aura"yı dijital sanata, hikâyelere ve sesli ifadelere dönüştüren interaktif bir web uygulamasıdır.
 
 ## Vizyon
 
-Aurascend, kullanıcıların kendilerini anlatması, tanımlaması ve anlamlandırmasıyla başlayan bir yolculuktur. Kullanıcılar metin girişi yapar, AuraScend bu girdiyi işleyerek kişiye özel bir görsel, açıklayıcı metin ve ileride sesli anlatım oluşturur.
+Aurascend, kullanıcıların kendilerini anlatması, tanımlaması ve anlamlandırmasıyla başlayan bir yolculuktur. Kullanıcılar metin girişi yapar, Aurascend bu girdiyi işleyerek kişiye özel bir görsel, açıklayıcı metin ve ileride sesli anlatım oluşturur.
 
-AuraScend, kullanıcıya sadece dijital bir ürün sunmaz; onun içsel dünyasını, duygularını ve "enerjisini" yansıtan benzersiz ve kişisel bir deneyim sağlar.
+Aurascend, kullanıcıya sadece dijital bir ürün sunmaz; onun içsel dünyasını, duygularını ve "enerjisini" yansıtan benzersiz ve kişisel bir deneyim sağlar.
 
 ## Özellikler
 
@@ -48,8 +48,8 @@ AuraScend, kullanıcıya sadece dijital bir ürün sunmaz; onun içsel dünyası
 
 ```bash
 # Projeyi klonlayın
-git clone https://github.com/yourusername/aurascend.git
-cd aurascend
+git clone https://github.com/yourusername/Aurascend.git
+cd Aurascend
 
 # Bağımlılıkları yükleyin
 npm install

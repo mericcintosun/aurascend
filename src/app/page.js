@@ -211,7 +211,7 @@ export default function Home() {
     {
       name: "Ayşe Yılmaz",
       role: "Yoga Eğitmeni",
-      comment: "AuraScend ile duygularımı daha iyi anlamaya başladım. Meditasyon uygulamalarımda büyük ilerleme kaydettim.",
+      comment: "Aurascend ile duygularımı daha iyi anlamaya başladım. Meditasyon uygulamalarımda büyük ilerleme kaydettim.",
       avatar: "/images/avatar-1.png",
     },
     {
@@ -254,7 +254,7 @@ export default function Home() {
                 İçsel <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Enerjini</span> Keşfet
               </h1>
               <p className="text-xl text-gray-300 mb-8 max-w-lg">
-                AuraScend ile duygularını, düşüncelerini ve içsel dünyandaki gizli potansiyeli çözümle. Ruhunun rengini keşfet.
+                Aurascend ile duygularını, düşüncelerini ve içsel dünyandaki gizli potansiyeli çözümle. Ruhunun rengini keşfet.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 {status === 'authenticated' ? (
@@ -314,7 +314,7 @@ export default function Home() {
               <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6 sm:p-8 shadow-2xl border border-white/10">
                 <p className="text-white/80 mb-6">
                   Kendini nasıl hissettiğini, düşüncelerini veya içsel durumunu anlatan bir metin yaz. 
-                  AuraScend, enerjini analiz edip sana özel bir aura oluşturacak.
+                  Aurascend, enerjini analiz edip sana özel bir aura oluşturacak.
                 </p>
                 
                 <textarea
@@ -434,7 +434,7 @@ export default function Home() {
       <section className="py-20 bg-black/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-16">
-            AuraScend <span className="text-purple-400">Özellikleri</span>
+            Aurascend <span className="text-purple-400">Özellikleri</span>
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -557,7 +557,7 @@ export default function Home() {
             İçsel Yolculuğuna Bugün Başla
           </h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Kendini daha iyi tanımak, içsel potansiyelini keşfetmek ve duygusal farkındalığını artırmak için AuraScend&apos;i hemen dene.
+            Kendini daha iyi tanımak, içsel potansiyelini keşfetmek ve duygusal farkındalığını artırmak için Aurascend&apos;i hemen dene.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -596,41 +596,7 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Footer */}
-      <footer className="py-10 bg-black/80 backdrop-blur-sm border-t border-white/10">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <h2 className="text-2xl font-bold text-white">
-                Aura<span className="text-purple-400">Scend</span>
-              </h2>
-              <p className="text-gray-400 mt-2">İçsel Enerjini Keşfet</p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link href="/about" className="text-gray-300 hover:text-purple-400 transition-colors">
-                Hakkımızda
-              </Link>
-              <Link href="/features" className="text-gray-300 hover:text-purple-400 transition-colors">
-                Özellikler
-              </Link>
-              <Link href="/privacy" className="text-gray-300 hover:text-purple-400 transition-colors">
-                Gizlilik Politikası
-              </Link>
-              <Link href="/terms" className="text-gray-300 hover:text-purple-400 transition-colors">
-                Kullanım Şartları
-              </Link>
-              <Link href="/contact" className="text-gray-300 hover:text-purple-400 transition-colors">
-                İletişim
-              </Link>
-            </div>
-          </div>
-          
-          <div className="text-center mt-10 text-gray-400">
-            <p>© {new Date().getFullYear()} AuraScend. Tüm hakları saklıdır.</p>
-          </div>
-        </div>
-      </footer>
+   
     </div>
   );
 }
