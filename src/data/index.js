@@ -1000,10 +1000,11 @@ export const getAllKeywords = () => {
   ];
 };
 
-// Aura çıktı gruplarına image parametresi ekleniyor
+// Aura çıktılarına müzik dosyalarını ata
 const addImagePathsToOutputs = (outputs) => {
   const updatedOutputs = { ...outputs };
   
+  // Aura görsellerini ata
   if (updatedOutputs.pozitif_1) updatedOutputs.pozitif_1.image = "/images/auras/aura_neseli_pozitif1.png";
   if (updatedOutputs.pozitif_2) updatedOutputs.pozitif_2.image = "/images/auras/aura_huzurlu_pozitif2.png";
   if (updatedOutputs.pozitif_3) updatedOutputs.pozitif_3.image = "/images/auras/aura_iyimser_pozitif3.png";
@@ -1065,6 +1066,69 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.ust_4) updatedOutputs.ust_4.image = "/images/auras/aura_evrensel_ust4.jpeg";
   if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.image = "/images/auras/aura_belirsiz_belirsiz1.jpeg";
   if (updatedOutputs.default) updatedOutputs.default.image = "/images/auras/aura_cok_boyutlu_default.jpeg";
+  
+  // Aura müziklerini ata
+  if (updatedOutputs.pozitif_1) updatedOutputs.pozitif_1.music = "/playlist/music1.mp3";
+  if (updatedOutputs.pozitif_2) updatedOutputs.pozitif_2.music = "/playlist/music2.mp3";
+  if (updatedOutputs.pozitif_3) updatedOutputs.pozitif_3.music = "/playlist/music3.mp3";
+  if (updatedOutputs.pozitif_4) updatedOutputs.pozitif_4.music = "/playlist/music4.mp3";
+  if (updatedOutputs.pozitif_5) updatedOutputs.pozitif_5.music = "/playlist/music5.mp3";
+  if (updatedOutputs.pozitif_6) updatedOutputs.pozitif_6.music = "/playlist/music6.mp3";
+  if (updatedOutputs.pozitif_7) updatedOutputs.pozitif_7.music = "/playlist/music7.mp3";
+  if (updatedOutputs.pozitif_8) updatedOutputs.pozitif_8.music = "/playlist/music8.mp3";
+  if (updatedOutputs.pozitif_9) updatedOutputs.pozitif_9.music = "/playlist/music9.mp3";
+  if (updatedOutputs.negatif_1) updatedOutputs.negatif_1.music = "/playlist/music10.mp3";
+  if (updatedOutputs.negatif_2) updatedOutputs.negatif_2.music = "/playlist/music11.mp3";
+  if (updatedOutputs.negatif_3) updatedOutputs.negatif_3.music = "/playlist/music12.mp3";
+  if (updatedOutputs.negatif_4) updatedOutputs.negatif_4.music = "/playlist/music13.mp3";
+  if (updatedOutputs.duragan_1) updatedOutputs.duragan_1.music = "/playlist/music14.mp3";
+  if (updatedOutputs.duragan_2) updatedOutputs.duragan_2.music = "/playlist/music15.mp3";
+  if (updatedOutputs.karmasik_1) updatedOutputs.karmasik_1.music = "/playlist/music16.mp3";
+  if (updatedOutputs.karmasik_2) updatedOutputs.karmasik_2.music = "/playlist/music17.mp3";
+  if (updatedOutputs.karmasik_3) updatedOutputs.karmasik_3.music = "/playlist/music18.mp3";
+  if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.music = "/playlist/music19.mp3";
+  if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.music = "/playlist/music20.mp3";
+  if (updatedOutputs.sosyal_3) updatedOutputs.sosyal_3.music = "/playlist/music21.mp3";
+  if (updatedOutputs.bireysel_1) updatedOutputs.bireysel_1.music = "/playlist/music22.mp3";
+  if (updatedOutputs.bireysel_2) updatedOutputs.bireysel_2.music = "/playlist/music23.mp3";
+  if (updatedOutputs.bireysel_3) updatedOutputs.bireysel_3.music = "/playlist/music24.mp3";
+  if (updatedOutputs.zor_1) updatedOutputs.zor_1.music = "/playlist/music25.mp3";
+  if (updatedOutputs.zor_2) updatedOutputs.zor_2.music = "/playlist/music26.mp3";
+  if (updatedOutputs.zor_3) updatedOutputs.zor_3.music = "/playlist/music27.mp3";
+  if (updatedOutputs.zor_4) updatedOutputs.zor_4.music = "/playlist/music28.mp3";
+  if (updatedOutputs.guclu_1) updatedOutputs.guclu_1.music = "/playlist/music29.mp3";
+  if (updatedOutputs.guclu_2) updatedOutputs.guclu_2.music = "/playlist/music30.mp3";
+  if (updatedOutputs.guclu_3) updatedOutputs.guclu_3.music = "/playlist/music31.mp3";
+  if (updatedOutputs.hassas_1) updatedOutputs.hassas_1.music = "/playlist/music32.mp3";
+  if (updatedOutputs.hassas_2) updatedOutputs.hassas_2.music = "/playlist/music33.mp3";
+  if (updatedOutputs.degisim_1) updatedOutputs.degisim_1.music = "/playlist/music34.mp3";
+  if (updatedOutputs.degisim_2) updatedOutputs.degisim_2.music = "/playlist/music35.mp3";
+  if (updatedOutputs.zihinsel_1) updatedOutputs.zihinsel_1.music = "/playlist/music36.mp3";
+  if (updatedOutputs.zihinsel_2) updatedOutputs.zihinsel_2.music = "/playlist/music37.mp3";
+  if (updatedOutputs.zihinsel_3) updatedOutputs.zihinsel_3.music = "/playlist/music38.mp3";
+  if (updatedOutputs.zihinsel_4) updatedOutputs.zihinsel_4.music = "/playlist/music39.mp3";
+  if (updatedOutputs.denge_1) updatedOutputs.denge_1.music = "/playlist/music40.mp3";
+  if (updatedOutputs.denge_2) updatedOutputs.denge_2.music = "/playlist/music41.mp3";
+  if (updatedOutputs.spirituel_1) updatedOutputs.spirituel_1.music = "/playlist/music42.mp3";
+  if (updatedOutputs.spirituel_2) updatedOutputs.spirituel_2.music = "/playlist/music43.mp3";
+  if (updatedOutputs.enerji_1) updatedOutputs.enerji_1.music = "/playlist/music44.mp3";
+  if (updatedOutputs.enerji_2) updatedOutputs.enerji_2.music = "/playlist/music45.mp3";
+  if (updatedOutputs.sanatsal_1) updatedOutputs.sanatsal_1.music = "/playlist/music46.mp3";
+  if (updatedOutputs.edebi_1) updatedOutputs.edebi_1.music = "/playlist/music47.mp3";
+  if (updatedOutputs.efsanevi_1) updatedOutputs.efsanevi_1.music = "/playlist/music48.mp3";
+  if (updatedOutputs.gelecek_1) updatedOutputs.gelecek_1.music = "/playlist/music49.mp3";
+  if (updatedOutputs.profesyonel_1) updatedOutputs.profesyonel_1.music = "/playlist/music50.mp3";
+  if (updatedOutputs.felsefi_1) updatedOutputs.felsefi_1.music = "/playlist/music51.mp3";
+  if (updatedOutputs.liderlik_1) updatedOutputs.liderlik_1.music = "/playlist/music52.mp3";
+  if (updatedOutputs.topluluk_1) updatedOutputs.topluluk_1.music = "/playlist/music53.mp3";
+  if (updatedOutputs.modern_1) updatedOutputs.modern_1.music = "/playlist/music54.mp3";
+  if (updatedOutputs.notr_1) updatedOutputs.notr_1.music = "/playlist/music55.mp3";
+  if (updatedOutputs.notr_2) updatedOutputs.notr_2.music = "/playlist/music56.mp3";
+  if (updatedOutputs.notr_3) updatedOutputs.notr_3.music = "/playlist/music57.mp3";
+  if (updatedOutputs.meta_1) updatedOutputs.meta_1.music = "/playlist/music58.mp3";
+  if (updatedOutputs.ust_4) updatedOutputs.ust_4.music = "/playlist/music59.mp3";
+  if (updatedOutputs.belirsiz_1) updatedOutputs.belirsiz_1.music = "/playlist/music60.mp3";
+  if (updatedOutputs.default) updatedOutputs.default.music = "/playlist/music61.mp3";
   
   return updatedOutputs;
 };

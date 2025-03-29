@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import AuraPlayer from "@/components/AuraPlayer";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -372,6 +373,13 @@ export default function Dashboard() {
                         height={300}
                         className="rounded-lg shadow-lg object-contain max-h-[300px] w-full"
                       />
+                    </div>
+                  )}
+                  
+                  {/* Aura müziği */}
+                  {detailAura.music && (
+                    <div className="mb-6">
+                      <AuraPlayer musicSrc={detailAura.music} />
                     </div>
                   )}
                   

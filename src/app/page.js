@@ -7,6 +7,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Spinner } from '@/components/Spinner';
+import AuraPlayer from "@/components/AuraPlayer";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -93,6 +94,11 @@ export default function Home() {
             // Varsa image ekle, yoksa ekleme
             if (result.output.image) {
               payload.image = result.output.image;
+            }
+            
+            // Varsa music ekle, yoksa ekleme
+            if (result.output.music) {
+              payload.music = result.output.music;
             }
             
             const response = await fetch('/api/aura-results', {
@@ -359,6 +365,13 @@ export default function Home() {
                         />
                       </div>
                     )}
+                    
+                    {auraResult.music && (
+                      <div className="mb-6">
+                        <AuraPlayer musicSrc={auraResult.music} />
+                      </div>
+                    )}
+                    
                     <h3 className="text-3xl font-bold text-white mb-2">{auraResult.message}</h3>
                     <p className="text-white/90 text-lg">{auraResult.description}</p>
                   </div>
