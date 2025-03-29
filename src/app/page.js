@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Spinner } from '@/components/Spinner';
 import AuraPlayer from '../components/AuraPlayer';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -213,27 +214,7 @@ export default function Home() {
     }
   ];
   
-  // Testimonials
-  const testimonials = [
-    {
-      name: "Ayşe Yılmaz",
-      role: "Yoga Eğitmeni",
-      comment: "Aurascend ile duygularımı daha iyi anlamaya başladım. Meditasyon uygulamalarımda büyük ilerleme kaydettim.",
-      avatar: "/images/avatar-1.png",
-    },
-    {
-      name: "Mehmet Kaya",
-      role: "Psikolog",
-      comment: "Hastalarımla çalışırken duygusal farkındalığı artırmak için harika bir araç. Görsel temsiller çok etkileyici.",
-      avatar: "/images/avatar-2.png",
-    },
-    {
-      name: "Zeynep Demir",
-      role: "Kişisel Gelişim Koçu",
-      comment: "Danışanlarım için müthiş bir içgörü aracı. Aura analizi, kişinin kendini tanıması için mükemmel bir başlangıç noktası.",
-      avatar: "/images/avatar-3.png",
-    }
-  ];
+
   
   if (status === 'loading') {
     return (
@@ -253,25 +234,36 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="md:w-1/2 mb-12 md:mb-0">
-              <h1 
+              <motion.h1 
                 className={`text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-1000 ${
                   animateTitle ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
                 }`}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
               >
                 İçsel <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Enerjini</span> Keşfet
-              </h1>
-              <p className="text-xl text-gray-300 mb-8 max-w-lg">
+              </motion.h1>
+              <motion.p 
+                className="text-xl text-gray-300 mb-8 max-w-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+              >
                 Aurascend ile duygularını, düşüncelerini ve içsel dünyandaki gizli potansiyeli çözümle. Ruhunun rengini keşfet.
-              </p>
+              </motion.p>
               <div className="flex flex-col sm:flex-row gap-4">
                 {status === 'authenticated' ? (
                   <>
-                    <button 
+                    <motion.button 
                       onClick={scrollToAnalysis}
                       className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 }}
                     >
                       Auranı Analiz Et
-                    </button>
+                    </motion.button>
                     
                     <Link 
                       href="/dashboard" 
@@ -314,7 +306,13 @@ export default function Home() {
       {status === 'authenticated' && (
         <section ref={analyzeRef} className="w-full py-20 bg-gradient-to-br from-black via-purple-950 to-black px-4">
           <div className="container mx-auto max-w-4xl">
-            <div className="bg-black/40 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/5">
+            <motion.div 
+              className="bg-black/40 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/5"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-10">
                 Auranı <span className="text-purple-400">Analiz Et</span>
               </h2>
@@ -333,7 +331,7 @@ export default function Home() {
                     <div className="text-xs text-gray-500">
                       {text.length}/500 karakter
                     </div>
-                    <button
+                    <motion.button
                       onClick={isAnalyzing ? null : analyzeText}
                       disabled={isAnalyzing || text.trim().length < 20}
                       className={`px-6 py-2 rounded-lg font-medium ${
@@ -341,9 +339,12 @@ export default function Home() {
                           ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
                           : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700'
                       } transition-all`}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 }}
                     >
                       {isAnalyzing ? 'Analiz Ediliyor...' : 'Auramı Analiz Et'}
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
                 
@@ -394,7 +395,12 @@ export default function Home() {
                 
                 {/* Aura analizi sonucu gösterimi */}
                 {auraResult && !isAnalyzing && (
-                  <div className="mt-4 animate-fadeInScale">
+                  <motion.div 
+                    className="mt-4 animate-fadeInScale"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <div className={`p-1 rounded-lg bg-gradient-to-r ${auraResult.color || 'from-purple-500 to-blue-500'} animate-gradient-flow aura-card`}>
                       <div className="bg-white dark:bg-gray-900 p-6 rounded-lg">
                         <div className="flex justify-between items-center mb-4">
@@ -434,44 +440,15 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       )}
       
-      {/* Features Section */}
-      <section className="py-20 bg-black/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-16">
-            Aurascend <span className="text-purple-400">Özellikleri</span>
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className="bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10 hover:border-purple-500/50 transition-all hover:shadow-purple-500/20 hover:shadow-lg"
-              >
-                <div className="mb-5">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-300">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              href="/features" 
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg inline-block transition-all"
-            >
-              Detaylı Bilgi
-            </Link>
-          </div>
-        </div>
-      </section>
+
       
       {/* How It Works Section */}
       <section className="py-20 bg-gradient-to-b from-black/50 to-blue-900/30 backdrop-blur-sm">
@@ -535,53 +512,7 @@ export default function Home() {
         </div>
       </section>
       
-    
-      
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-900/30 to-purple-900/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            İçsel Yolculuğuna Bugün Başla
-          </h2>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Kendini daha iyi tanımak, içsel potansiyelini keşfetmek ve duygusal farkındalığını artırmak için Aurascend&apos;i hemen dene.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {status === 'authenticated' ? (
-              <>
-                <button 
-                  onClick={scrollToAnalysis}
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
-                >
-                  Auramı Analiz Et
-                </button>
-                <Link 
-                  href="/dashboard" 
-                  className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
-                >
-                  Aura Geçmişimi Gör
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link 
-                  href="/auth/login" 
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
-                >
-                  Giriş Yap
-                </Link>
-                <Link 
-                  href="/auth/register" 
-                  className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
-                >
-                  Ücretsiz Kaydol
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+
       
    
     </div>

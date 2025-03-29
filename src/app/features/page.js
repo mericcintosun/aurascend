@@ -70,16 +70,7 @@ const FeaturePage = () => {
 
         {/* Navigation Tabs */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <button 
-            onClick={() => setActiveTab('aura-colors')} 
-            className={`px-6 py-3 rounded-full text-lg font-medium transition ${
-              activeTab === 'aura-colors' 
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
-                : 'bg-blue-900/50 text-blue-200 hover:bg-blue-800/60'
-            }`}
-          >
-            Aura Renkleri
-          </button>
+          
           <button 
             onClick={() => setActiveTab('sentiment-analysis')} 
             className={`px-6 py-3 rounded-full text-lg font-medium transition ${

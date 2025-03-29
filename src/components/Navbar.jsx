@@ -10,19 +10,17 @@ import { motion, AnimatePresence } from "framer-motion";
 // NavLink bileşeni - aktif sayfayı vurgular
 const NavLink = ({ href, children, onClick }) => {
   const pathname = usePathname();
-  const isActive = pathname === href || (href !== '/' && pathname?.startsWith(href));
-  
+  const isActive =
+    pathname === href || (href !== "/" && pathname?.startsWith(href));
+
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       <Link
         href={href}
         className={`transition-colors px-3 py-2 rounded-md text-sm font-medium ${
-          isActive 
-            ? 'bg-blue-800/70 text-purple-300' 
-            : 'text-white hover:bg-blue-800 hover:text-purple-300'
+          isActive
+            ? "bg-blue-800/70 text-purple-300"
+            : "text-white hover:bg-blue-800 hover:text-purple-300"
         }`}
         onClick={onClick}
       >
@@ -35,18 +33,17 @@ const NavLink = ({ href, children, onClick }) => {
 // Mobil NavLink bileşeni
 const MobileNavLink = ({ href, children, onClick }) => {
   const pathname = usePathname();
-  const isActive = pathname === href || (href !== '/' && pathname?.startsWith(href));
-  
+  const isActive =
+    pathname === href || (href !== "/" && pathname?.startsWith(href));
+
   return (
-    <motion.div
-      whileTap={{ scale: 0.95 }}
-    >
+    <motion.div whileTap={{ scale: 0.95 }}>
       <Link
         href={href}
         className={`block px-3 py-2 rounded-md text-base font-medium ${
-          isActive 
-            ? 'bg-blue-800/70 text-purple-300' 
-            : 'text-white hover:bg-blue-800 hover:text-purple-300'
+          isActive
+            ? "bg-blue-800/70 text-purple-300"
+            : "text-white hover:bg-blue-800 hover:text-purple-300"
         }`}
         onClick={onClick}
       >
@@ -66,7 +63,7 @@ export default function Navbar() {
   };
 
   return (
-    <motion.nav 
+    <motion.nav
       className="bg-gradient-to-r from-blue-900 to-purple-900 shadow-lg sticky top-0 z-50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -75,21 +72,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center outline-none focus:outline-none" aria-label="Ana sayfaya git">
-              <motion.div 
-                className="flex items-center space-x-3"
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center outline-none focus:outline-none"
+              aria-label="Ana sayfaya git"
+            >
+              <motion.div
+                className="flex items-center space-x-3 outline-none focus:outline-none focus:ring-0"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Image 
-                  src="/aurascend-logo.png" 
-                  alt="Aurascend Logo" 
-                  width={80} 
-                  height={40} 
-                  className="rounded-md p-3"
+                <Image
+                  src="/aurascend-logo.png"
+                  alt="Aurascend Logo"
+                  width={80}
+                  height={40}
+                  className="rounded-md p-3  outline-none focus:outline-none focus:ring-0"
                   priority
                 />
-                <motion.h1 
+                <motion.h1
                   className="text-2xl font-bold text-white hidden md:block"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -108,7 +109,7 @@ export default function Navbar() {
 
             {/* Auth Buttons */}
             {status === "authenticated" ? (
-              <motion.div 
+              <motion.div
                 className="flex items-center ml-3"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -132,9 +133,9 @@ export default function Navbar() {
                   <Link
                     href="/dashboard"
                     className={`ml-2 px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname?.startsWith('/dashboard')
-                        ? 'bg-purple-700 text-white'
-                        : 'bg-purple-600 hover:bg-purple-700 text-white'
+                      pathname?.startsWith("/dashboard")
+                        ? "bg-purple-700 text-white"
+                        : "bg-purple-600 hover:bg-purple-700 text-white"
                     }`}
                   >
                     Profilim
@@ -142,7 +143,7 @@ export default function Navbar() {
                 </motion.div>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 className="flex items-center space-x-2"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -155,9 +156,9 @@ export default function Navbar() {
                   <Link
                     href="/auth/login"
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname?.startsWith('/auth/login')
-                        ? 'bg-purple-700 text-white'
-                        : 'bg-purple-600 hover:bg-purple-700 text-white'
+                      pathname?.startsWith("/auth/login")
+                        ? "bg-purple-700 text-white"
+                        : "bg-purple-600 hover:bg-purple-700 text-white"
                     }`}
                   >
                     Giriş Yap
@@ -170,9 +171,9 @@ export default function Navbar() {
                   <Link
                     href="/auth/register"
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname?.startsWith('/auth/register')
-                        ? 'bg-blue-700 text-white'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                      pathname?.startsWith("/auth/register")
+                        ? "bg-blue-700 text-white"
+                        : "bg-blue-600 hover:bg-blue-700 text-white"
                     }`}
                   >
                     Kayıt Ol
@@ -231,7 +232,7 @@ export default function Navbar() {
       {/* Mobile menu, show/hide based on menu state */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             className="md:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -242,7 +243,10 @@ export default function Navbar() {
               <MobileNavLink href="/" onClick={() => setIsMenuOpen(false)}>
                 Ana Sayfa
               </MobileNavLink>
-              <MobileNavLink href="/features" onClick={() => setIsMenuOpen(false)}>
+              <MobileNavLink
+                href="/features"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Özellikler
               </MobileNavLink>
 
@@ -261,9 +265,9 @@ export default function Navbar() {
                       <Link
                         href="/dashboard"
                         className={`block px-3 py-2 rounded-md text-base font-medium ${
-                          pathname?.startsWith('/dashboard')
-                            ? 'bg-purple-700 text-white'
-                            : 'text-white hover:bg-blue-800 hover:text-purple-300'
+                          pathname?.startsWith("/dashboard")
+                            ? "bg-purple-700 text-white"
+                            : "text-white hover:bg-blue-800 hover:text-purple-300"
                         }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -288,9 +292,9 @@ export default function Navbar() {
                     <Link
                       href="/auth/login"
                       className={`block w-full text-center px-3 py-2 rounded-md text-base font-medium mb-2 ${
-                        pathname?.startsWith('/auth/login')
-                          ? 'bg-purple-700 text-white'
-                          : 'bg-purple-600 hover:bg-purple-700 text-white'
+                        pathname?.startsWith("/auth/login")
+                          ? "bg-purple-700 text-white"
+                          : "bg-purple-600 hover:bg-purple-700 text-white"
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -301,9 +305,9 @@ export default function Navbar() {
                     <Link
                       href="/auth/register"
                       className={`block w-full text-center px-3 py-2 rounded-md text-base font-medium ${
-                        pathname?.startsWith('/auth/register')
-                          ? 'bg-blue-700 text-white'
-                          : 'bg-blue-600 hover:bg-blue-700 text-white'
+                        pathname?.startsWith("/auth/register")
+                          ? "bg-blue-700 text-white"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
