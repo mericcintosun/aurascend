@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Spinner } from '@/components/Spinner';
 import AuraPlayer from '../components/AuraPlayer';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -23,8 +23,22 @@ export default function Home() {
   // Hero bölümündeki animasyon için kullanılacak state
   const [animateTitle, setAnimateTitle] = useState(false);
   
-  // Aura analiz bölümüne scroll yapmak için ref
+  // Scroll animasyonları için ref'ler
   const analyzeRef = useRef(null);
+  const howItWorksRef = useRef(null);
+  const featuresRef = useRef(null);
+  const ctaRef = useRef(null);
+  
+  // Scroll progress için
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.2]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
+  
+  // Section görünürlük kontrolleri
+  const isAnalyzeVisible = useInView(analyzeRef, { once: false, amount: 0.3 });
+  const isHowItWorksVisible = useInView(howItWorksRef, { once: false, amount: 0.3 });
+  const isFeaturesVisible = useInView(featuresRef, { once: false, amount: 0.3 });
+  const isCtaVisible = useInView(ctaRef, { once: false, amount: 0.3 });
   
   // Scroll to aura analysis section
   const scrollToAnalysis = () => {
@@ -227,7 +241,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
+      <motion.section 
+        className="relative py-20 md:py-32 overflow-hidden"
+        style={{ opacity, scale }}
+      >
         <div className="absolute inset-0 bg-[url('/images/stars-bg.jpg')] bg-cover opacity-30"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-blue-900/70 to-black/70"></div>
         
@@ -255,56 +272,117 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4">
                 {status === 'authenticated' ? (
                   <>
-                    <motion.button 
-                      onClick={scrollToAnalysis}
-                      className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                    <motion.div
                       initial={{ opacity: 0, y: 50 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.6 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full sm:w-auto"
                     >
-                      Auranı Analiz Et
-                    </motion.button>
+                      <button 
+                        onClick={scrollToAnalysis}
+                        className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                      >
+                        Auramı Analiz Et
+                      </button>
+                    </motion.div>
                     
-                    <Link 
-                      href="/dashboard" 
-                      className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.7 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full sm:w-auto"
                     >
-                      Aura Geçmişim
-                    </Link>
+                      <Link 
+                        href="/dashboard" 
+                        className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all whitespace-nowrap"
+                      >
+                        Aura Geçmişim
+                      </Link>
+                    </motion.div>
                   </>
                 ) : (
                   <>
-                    <Link 
-                      href="/auth/login" 
-                      className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      Hemen Başla
-                    </Link>
-                    <Link 
-                      href="/auth/register" 
-                      className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                      <Link 
+                        href="/auth/login" 
+                        className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                      >
+                        Hemen Başla
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.7 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      Ücretsiz Kaydol
-                    </Link>
+                      <Link 
+                        href="/auth/register" 
+                        className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                      >
+                        Ücretsiz Kaydol
+                      </Link>
+                    </motion.div>
                   </>
                 )}
               </div>
             </div>
             
-            <div className="md:w-1/2 flex justify-center">
+            <motion.div 
+              className="md:w-1/2 flex justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
               <div className="relative w-64 h-64 md:w-80 md:h-80">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 animate-pulse blur-xl opacity-70"></div>
                 <div className="absolute inset-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 animate-pulse blur-lg opacity-80"></div>
                 <div className="absolute inset-20 rounded-full bg-gradient-to-r from-purple-300 to-blue-300 animate-pulse blur-md"></div>
               </div>
-            </div>
+            </motion.div>
           </div>
+          
+          {/* Scroll Indicator */}
+          <motion.div 
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          >
+            <span className="text-sm mb-2">Keşfetmeye Başla</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
       
       {/* Analyze Section */}
       {status === 'authenticated' && (
-        <section ref={analyzeRef} className="w-full py-20 bg-gradient-to-br from-black via-purple-950 to-black px-4">
+        <motion.section 
+          ref={analyzeRef} 
+          className="w-full py-20 bg-gradient-to-br from-black via-purple-950 to-black px-4"
+          animate={{
+            opacity: isAnalyzeVisible ? 1 : 0.5,
+            y: isAnalyzeVisible ? 0 : 50
+          }}
+          transition={{ duration: 0.7 }}
+        >
           <div className="container mx-auto max-w-4xl">
             <motion.div 
               className="bg-black/40 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/5"
@@ -342,6 +420,8 @@ export default function Home() {
                       initial={{ opacity: 0, y: 50 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.6 }}
+                      whileHover={isAnalyzing || text.trim().length < 20 ? {} : { scale: 1.05 }}
+                      whileTap={isAnalyzing || text.trim().length < 20 ? {} : { scale: 0.95 }}
                     >
                       {isAnalyzing ? 'Analiz Ediliyor...' : 'Auramı Analiz Et'}
                     </motion.button>
@@ -350,7 +430,12 @@ export default function Home() {
                 
                 {/* Analiz yükleniyor animasyonu */}
                 {isAnalyzing && (
-                  <div className="mt-6 p-8 rounded-lg bg-white dark:bg-gray-900 shadow-lg relative overflow-hidden animate-fadeIn">
+                  <motion.div 
+                    className="mt-6 p-8 rounded-lg bg-white dark:bg-gray-900 shadow-lg relative overflow-hidden animate-fadeIn"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20 animate-gradient-flow"></div>
                     <div className="relative z-10">
                       <div className="flex flex-col items-center justify-center">
@@ -390,7 +475,7 @@ export default function Home() {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
                 
                 {/* Aura analizi sonucu gösterimi */}
@@ -445,76 +530,225 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
       
-
-      
       {/* How It Works Section */}
-      <section className="py-20 bg-gradient-to-b from-black/50 to-blue-900/30 backdrop-blur-sm">
+      <motion.section 
+        ref={howItWorksRef}
+        className="py-20 bg-gradient-to-b from-black/50 to-blue-900/30 backdrop-blur-sm"
+        animate={{
+          opacity: isHowItWorksVisible ? 1 : 0.5,
+          y: isHowItWorksVisible ? 0 : 50
+        }}
+        transition={{ duration: 0.7 }}
+      >
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-10 md:mb-16">
             <span className="text-purple-400">Nasıl</span> Çalışır?
           </h2>
           
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center mb-20">
-              <div className="md:w-1/2 mb-8 md:mb-0 md:pr-10">
-                <div className="text-5xl font-bold text-purple-500 mb-4">1</div>
-                <h3 className="text-2xl font-semibold text-white mb-4">Duygularını ve Düşüncelerini Yaz</h3>
-                <p className="text-gray-300">
+            <motion.div 
+              className="flex flex-col md:flex-row items-center gap-8 mb-16 md:mb-20"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="w-full md:w-1/2 order-2 md:order-1">
+                <div className="text-4xl md:text-5xl font-bold text-purple-500 mb-4">1</div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 md:mb-4">Duygularını ve Düşüncelerini Yaz</h3>
+                <p className="text-gray-300 text-base md:text-lg">
                   Kendini nasıl hissettiğini, düşüncelerini veya içsel durumunu anlatan bir metin yaz. Ne kadar detaylı olursa, analizin o kadar doğru olur.
                 </p>
               </div>
-              <div className="md:w-1/2 bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10">
-                <div className="h-48 bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-full md:w-1/2 order-1 md:order-2 bg-white/5 backdrop-blur-sm p-5 rounded-xl border border-white/10 shadow-lg">
+                <div className="h-56 sm:h-64 md:h-48 lg:h-60 bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 md:h-20 md:w-20 lg:h-24 lg:w-24 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 </div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="flex flex-col md:flex-row-reverse items-center mb-20">
-              <div className="md:w-1/2 mb-8 md:mb-0 md:pl-10">
-                <div className="text-5xl font-bold text-purple-500 mb-4">2</div>
-                <h3 className="text-2xl font-semibold text-white mb-4">Yapay Zeka Analizi</h3>
-                <p className="text-gray-300">
+            <motion.div 
+              className="flex flex-col md:flex-row-reverse items-center gap-8 mb-16 md:mb-20"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="w-full md:w-1/2 order-2 md:order-1">
+                <div className="text-4xl md:text-5xl font-bold text-purple-500 mb-4">2</div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 md:mb-4">Yapay Zeka Analizi</h3>
+                <p className="text-gray-300 text-base md:text-lg">
                   Gelişmiş yapay zeka algoritmamız, metnini analiz ederek duygularını, düşüncelerini ve enerji durumunu değerlendirir.
                 </p>
               </div>
-              <div className="md:w-1/2 bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10">
-                <div className="h-48 bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-full md:w-1/2 order-1 md:order-2 bg-white/5 backdrop-blur-sm p-5 rounded-xl border border-white/10 shadow-lg">
+                <div className="h-56 sm:h-64 md:h-48 lg:h-60 bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 md:h-20 md:w-20 lg:h-24 lg:w-24 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-8 md:mb-0 md:pr-10">
-                <div className="text-5xl font-bold text-purple-500 mb-4">3</div>
-                <h3 className="text-2xl font-semibold text-white mb-4">Auranı Keşfet</h3>
-                <p className="text-gray-300">
+            <motion.div 
+              className="flex flex-col md:flex-row items-center gap-8"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <div className="w-full md:w-1/2 order-2 md:order-1">
+                <div className="text-4xl md:text-5xl font-bold text-purple-500 mb-4">3</div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 md:mb-4">Auranı Keşfet</h3>
+                <p className="text-gray-300 text-base md:text-lg">
                   Analiz sonucunda benzersiz auranı, anlamını ve içsel potansiyelini gösteren görsel ve açıklamalı bir rapor al.
                 </p>
               </div>
-              <div className="md:w-1/2 bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10">
-                <div className="h-48 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-full md:w-1/2 order-1 md:order-2 bg-white/5 backdrop-blur-sm p-5 rounded-xl border border-white/10 shadow-lg">
+                <div className="h-56 sm:h-64 md:h-48 lg:h-60 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 md:h-20 md:w-20 lg:h-24 lg:w-24 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
                   </svg>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
       
-
+      {/* Features Section */}
+      <motion.section 
+        ref={featuresRef}
+        className="py-20 bg-black/50 backdrop-blur-sm"
+        animate={{
+          opacity: isFeaturesVisible ? 1 : 0.5,
+          y: isFeaturesVisible ? 0 : 50
+        }}
+        transition={{ duration: 0.7 }}
+      >
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Neden <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Aurascend</span>?
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Duygusal zekânızı geliştirmek ve içsel dengenizi bulmak için tasarlanmış yenilikçi özelliklerimizi keşfedin.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div 
+                key={index} 
+                className="bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10 hover:border-purple-500/50 transition-all hover:shadow-purple-500/20 hover:shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5, scale: 1.02 }}
+              >
+                <div className="mb-5">{feature.icon}</div>
+                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-300">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
       
-   
+      {/* CTA Section */}
+      <motion.section 
+        ref={ctaRef}
+        className="py-20 bg-gradient-to-b from-blue-900/30 to-purple-900/50 backdrop-blur-sm"
+        animate={{
+          opacity: isCtaVisible ? 1 : 0.5,
+          y: isCtaVisible ? 0 : 50
+        }}
+        transition={{ duration: 0.7 }}
+      >
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              İçsel Yolculuğuna Bugün Başla
+            </h2>
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+              Kendini daha iyi tanımak, içsel potansiyelini keşfetmek ve duygusal farkındalığını artırmak için Aurascend&apos;i hemen dene.
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            {status === 'authenticated' ? (
+              <>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
+                  <button 
+                    onClick={scrollToAnalysis}
+                    className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all whitespace-nowrap"
+                  >
+                    Auramı Analiz Et
+                  </button>
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
+                  <Link 
+                    href="/dashboard" 
+                    className="w-full block px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all whitespace-nowrap"
+                  >
+                    Aura Geçmişimi Gör
+                  </Link>
+                </motion.div>
+              </>
+            ) : (
+              <>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="/auth/login" 
+                    className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg text-center transition-all"
+                  >
+                    Giriş Yap
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="/auth/register" 
+                    className="px-8 py-4 border-2 border-purple-500 text-white hover:bg-purple-500/20 font-medium rounded-lg text-center transition-all"
+                  >
+                    Ücretsiz Kaydol
+                  </Link>
+                </motion.div>
+              </>
+            )}
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   );
 }
