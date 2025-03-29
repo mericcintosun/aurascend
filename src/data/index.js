@@ -1004,7 +1004,6 @@ export const getAllKeywords = () => {
 const addImagePathsToOutputs = (outputs) => {
   const updatedOutputs = { ...outputs };
   
-  // İlk 20 resim için yolları ekleyelim
   if (updatedOutputs.pozitif_1) updatedOutputs.pozitif_1.image = "/images/auras/aura_neseli_pozitif1.png";
   if (updatedOutputs.pozitif_2) updatedOutputs.pozitif_2.image = "/images/auras/aura_huzurlu_pozitif2.png";
   if (updatedOutputs.pozitif_3) updatedOutputs.pozitif_3.image = "/images/auras/aura_iyimser_pozitif3.png";
@@ -1025,8 +1024,6 @@ const addImagePathsToOutputs = (outputs) => {
   if (updatedOutputs.karmasik_3) updatedOutputs.karmasik_3.image = "/images/auras/aura_tutkulu_karmasik3.png";
   if (updatedOutputs.sosyal_1) updatedOutputs.sosyal_1.image = "/images/auras/aura_sevgi_dolu_sosyal1.png";
   if (updatedOutputs.sosyal_2) updatedOutputs.sosyal_2.image = "/images/auras/aura_minnettar_sosyal2.png";
-  
-  // Kalan resimler için yolları ekleyelim
   if (updatedOutputs.sosyal_3) updatedOutputs.sosyal_3.image = "/images/auras/aura_guven_veren_sosyal3.png";
   if (updatedOutputs.bireysel_1) updatedOutputs.bireysel_1.image = "/images/auras/aura_gururlu_bireysel1.png";
   if (updatedOutputs.bireysel_2) updatedOutputs.bireysel_2.image = "/images/auras/aura_ozgur_bireysel2.png";

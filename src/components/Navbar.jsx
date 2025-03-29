@@ -61,9 +61,19 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <h1 className="text-2xl font-bold text-white">
-                Aur<span className="text-purple-400">ascend</span>
-              </h1>
+              <div className="flex items-center space-x-3">
+                <Image 
+                  src="/aurascend-logo.png" 
+                  alt="Aurascend Logo" 
+                  width={80} 
+                  height={40} 
+                  className="rounded-md p-3"
+                  priority
+                />
+                <h1 className="text-2xl font-bold text-white hidden md:block">
+                  Aur<span className="text-purple-400">ascend</span>
+                </h1>
+              </div>
             </Link>
           </div>
 
