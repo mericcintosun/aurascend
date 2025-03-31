@@ -521,7 +521,7 @@ export default function Home() {
                 {/* Aura analizi sonucu gösterimi */}
                 {auraResult && !isAnalyzing && (
                   <motion.div 
-                    className="mt-4 animate-fadeInScale"
+                    className="mt-4 animate-fadeInScale relative z-50"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -557,7 +557,7 @@ export default function Home() {
                             
                             {/* Müzik oynatıcı */}
                             {auraResult.music && (
-                              <div className="mb-4">
+                              <div className="mb-4 relative z-50">
                                 <AuraPlayer musicFile={auraResult.music} />
                               </div>
                             )}
