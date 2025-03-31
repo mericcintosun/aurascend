@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-purple-900 to-indigo-800 text-white py-6">
+    <footer className="bg-gradient-to-r from-purple-900/95 to-indigo-800/95 text-white py-6 backdrop-blur-sm shadow-lg border-t border-white/10">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-center md:text-left mb-4 md:mb-0">
+          <p className="text-sm text-center md:text-left mb-4 md:mb-0 text-white/90">
             Bu proje Meriç Cintosun tarafından Lenovo Yapay Zeka Maratonu için geliştirilmiştir.
             Projeyle ilgili detaylara{' '}
             <Link href="mailto:mericcintosunn@gmail.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-300 transition-colors">
